@@ -12,13 +12,13 @@ public class Users {
 		private String ssn;
 		private String securityQuestion;
 		private String securityAnswer;
-		private boolean adminStatus;
+		private boolean admin;
 
-		public boolean isAdminStatus() {
-			return adminStatus;
+		public boolean isAdmin() {
+			return admin;
 		}
 		public void setAdminStatus(boolean adminStatus) {
-			this.adminStatus = adminStatus;
+			this.admin = adminStatus;
 		}
 		public String getFirstName() {
 			return firstName;
