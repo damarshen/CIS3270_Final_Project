@@ -1,18 +1,18 @@
 package Objects.Users;
 
 public class Users {
-		private String firstName;
-		private String lastName;
-		private String Address;
-		private int zipCode;
-		private String state;
-		private String username;
-		private String password;
-		private String email;
-		private String ssn;
-		private String securityQuestion;
-		private String securityAnswer;
-		private boolean admin;
+		private String firstName; //User first name
+		private String lastName;	//user last name
+		private String Address; //user address
+		private int zipCode; //user zip code
+		private String state; //user state
+		private String username; //use username
+		private String password; //user password
+		private String email; //user email 
+		private String ssn; //user social security number
+		private String securityQuestion; //user security question
+		private String securityAnswer; //user answer for security question
+		private boolean admin; //denotes if user has admin status
 
 		public boolean isAdmin() {
 			return admin;
