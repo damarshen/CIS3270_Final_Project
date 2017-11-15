@@ -17,7 +17,7 @@ static Users securityTest;//declares user object
 		
 		
 		
-		
+		//
 		City city = new City("Calgary", "Alberta", "YYC");
 		System.out.println(city.toString());
 		Scanner input =new Scanner(System.in);
