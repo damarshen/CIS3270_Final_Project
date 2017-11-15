@@ -1,6 +1,6 @@
 package Objects.Flights;
 
-public class Flight {
+public class Flight {	
 private String airline;	
 private int flightNumber;
 private int flightCapacity;
