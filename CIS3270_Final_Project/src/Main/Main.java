@@ -14,12 +14,7 @@ static Users securityTest;//declares user object
 		
 		
 		ArrayList <Users> userlist = new ArrayList();
-		
-		
-		
-		// kvkd
-		City city = new City("Calgary", "Alberta", "YYC");
-		System.out.println(city.toString());
+
 		Scanner input =new Scanner(System.in);
 		securityTest = new Users();
 		securityTest.setPassword("Capn' Crunch");

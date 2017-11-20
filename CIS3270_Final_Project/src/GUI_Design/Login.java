@@ -88,6 +88,12 @@ public class Login {
 		frame.getContentPane().add(btnLogIn);
 		
 		JButton btnRegister = new JButton("Register");
+		btnRegister.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Register info =new Register();
+				Register.main(null);
+			}
+		});
 		btnRegister.setBounds(181, 201, 89, 23);
 		frame.getContentPane().add(btnRegister);
 		
