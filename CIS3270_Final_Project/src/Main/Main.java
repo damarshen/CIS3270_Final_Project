@@ -1,14 +1,20 @@
 package Main;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
+import Objects.Citys.City;
 import Objects.Users.Users;
 
 public class Main {
 static Users securityTest;//declares user object
 	public static void main(String[] args) {
+		
+		
+		ArrayList <Users> userlist = new ArrayList();
+
 		Scanner input =new Scanner(System.in);
 		securityTest = new Users();
 		securityTest.setPassword("Capn' Crunch");
@@ -19,6 +25,8 @@ static Users securityTest;//declares user object
 	String answer = input.nextLine();//accepts input for answer
  System.out.println( passwordRetrieval(answer)); //passes answer to password retrieval method for comparison password if correct, or wrong answer message
 	}
+	
+	
 	
 	//method that checks users input to security question and compares it to answer provided upon registration
 	public static String passwordRetrieval(String Answer) { 
