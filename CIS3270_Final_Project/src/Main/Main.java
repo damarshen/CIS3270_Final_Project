@@ -6,6 +6,7 @@ import java.util.Scanner;
 import javax.swing.JOptionPane;
 
 import Objects.Citys.City;
+import Objects.Flights.Flight;
 import Objects.Users.Users;
 
 public class Main {
@@ -14,7 +15,8 @@ static Users securityTest;//declares user object
 		
 		
 		ArrayList <Users> userlist = new ArrayList();
-
+		
+	
 		Scanner input =new Scanner(System.in);
 		securityTest = new Users();
 		securityTest.setPassword("Capn' Crunch");
