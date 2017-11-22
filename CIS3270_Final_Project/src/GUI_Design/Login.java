@@ -1,24 +1,20 @@
 package GUI_Design;
+import java.sql.*;
 import Objects.Users.Users;
-import java.awt.EventQueue;
+import java.awt.event.*;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
-import java.awt.Font;
-import javax.swing.SwingConstants;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Login {
+	Connection myConn ;
+	Statement myStat;
+	ResultSet myRs;
 
 	private JFrame frame;
 	private JTextField textFieldUSer;
 	private JPasswordField passwordField;
+	
 
 	/**
 	 * Launch the application.
@@ -51,23 +47,24 @@ public class Login {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		frame.setVisible(false);
 		
-		JLabel LoginLabel = new JLabel("Enter Your Username & Password");
-		LoginLabel.setBounds(0, 0, 434, 28);
-		LoginLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		LoginLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		LoginLabel.setFont(new Font("Tahoma", Font.BOLD, 23));
-		frame.getContentPane().add(LoginLabel);
+		JLabel loginLabel = new JLabel("Enter Your Username & Password");
+		loginLabel.setBounds(0, 0, 434, 28);
+		loginLabel.setVerticalAlignment(SwingConstants.BOTTOM);
+		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		loginLabel.setFont(new Font("Calibri", Font.BOLD, 23));
+		frame.getContentPane().add(loginLabel);
 		
-		JLabel lblUsername = new JLabel("Username:");
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblUsername.setBounds(10, 60, 124, 28);
-		frame.getContentPane().add(lblUsername);
+		JLabel username_label = new JLabel("Username:");
+		username_label.setFont(new Font("Calibri", Font.BOLD, 20));
+		username_label.setBounds(30, 68, 124, 20);
+		frame.getContentPane().add(username_label);
 		
-		JLabel lblPassword = new JLabel("Password:");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 20));
-		lblPassword.setBounds(10, 113, 124, 28);
-		frame.getContentPane().add(lblPassword);
+		JLabel passwordLabel = new JLabel("Password:");
+		passwordLabel.setFont(new Font("Calibri", Font.BOLD, 20));
+		passwordLabel.setBounds(27, 121, 124, 20);
+		frame.getContentPane().add(passwordLabel);
 		
 		textFieldUSer = new JTextField();
 		textFieldUSer.setBounds(161, 68, 124, 20);
@@ -81,10 +78,56 @@ public class Login {
 		JButton btnLogIn = new JButton("Log In");
 		btnLogIn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				try {
+				//get a connection to the database
+				Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
+				//create a statement
+				Statement myStat = myConn.createStatement();
+				//execute a query
+				ResultSet myRs;	
+					
+				//collects username from the username text field and assigns to a string called user
+				String user = textFieldUSer.getText().trim();
+				
+				//collects password from the password text field and assigns to a string called password
+				String password = passwordField.getText().trim();
+				
+				//sql query to check if username and password is in database
+				String sqlUserCheck = "SELECT `username` FROM `flights`.`user` where username = '" + user + "' and password = '" + password + "'";
+				myRs = myStat.executeQuery(sqlUserCheck);
+				
+				int count = 0;
+				
+				//while loop that will determine if user is in the database
+				while(myRs.next()){
+					count = count + 1;
+					
+					}
+				
+				//if user is in the database and the pasword is correct it will take user to log in page
+				if (count==1) {
+					
+					mainPage info =new mainPage();
+					mainPage.main(null);
+					
+				}
+				
+				else if (count<1) {
+					JOptionPane.showMessageDialog(null, "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account");
+				}
+				
+				}
+			
+				catch(Exception ex){
+					
+				}
+				
+				
 
 			}
 		});
-		btnLogIn.setBounds(82, 201, 89, 23);
+		btnLogIn.setBounds(30, 165, 141, 28);
 		frame.getContentPane().add(btnLogIn);
 		
 		JButton btnRegister = new JButton("Register");
@@ -94,11 +137,15 @@ public class Login {
 				Register.main(null);
 			}
 		});
-		btnRegister.setBounds(181, 201, 89, 23);
+		btnRegister.setBounds(260, 165, 141, 28);
 		frame.getContentPane().add(btnRegister);
 		
 		JButton btnNewButton = new JButton("Exit");
-		btnNewButton.setBounds(280, 201, 89, 23);
+		btnNewButton.setBounds(260, 211, 141, 28);
 		frame.getContentPane().add(btnNewButton);
+		
+		JButton btnForgotPassword = new JButton("Forgot Password");
+		btnForgotPassword.setBounds(30, 211, 141, 28);
+		frame.getContentPane().add(btnForgotPassword);
 	}
 }

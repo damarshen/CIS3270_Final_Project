@@ -8,7 +8,7 @@ public class Driver {
 		
 		try {
 			//get a connection to the database
-			Connection myConn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306?verifyServerCertificate=false&useSSL=true", "ojallow1", "Tdgiheay12");
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
 			//create a statement
 			Statement myStat = myConn.createStatement();
 			//execute a query
