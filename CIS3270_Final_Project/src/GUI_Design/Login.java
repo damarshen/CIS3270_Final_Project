@@ -178,6 +178,13 @@ public class Login {
 		
 		//Takes user to password recovery page
 		JButton btnForgotPassword = new JButton("Forgot Password");
+		btnForgotPassword.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Login.frame.setVisible(false);
+				passwordRecovery info =new passwordRecovery();
+				passwordRecovery.main(null);
+			}
+		});
 		btnForgotPassword.setBounds(30, 211, 141, 28);
 		frame.getContentPane().add(btnForgotPassword);
 	}
