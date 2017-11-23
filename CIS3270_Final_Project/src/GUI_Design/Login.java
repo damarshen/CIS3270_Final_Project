@@ -1,6 +1,5 @@
 package GUI_Design;
 import java.sql.*;
-import Objects.Users.Users;
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
@@ -137,7 +136,7 @@ public class Login {
 				 *  or prompts the user to register if they do not have an account
 				**/
 				else if (count<1) {
-					JOptionPane.showMessageDialog(null, "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account");
+					JOptionPane.showMessageDialog(null, "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account.");
 				}
 				
 				}
@@ -153,7 +152,7 @@ public class Login {
 		btnLogIn.setBounds(30, 165, 141, 28);
 		frame.getContentPane().add(btnLogIn);
 		
-		//Takes user to registration ge
+		//Takes user to registration page
 		JButton btnRegister = new JButton("Register");
 		btnRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
