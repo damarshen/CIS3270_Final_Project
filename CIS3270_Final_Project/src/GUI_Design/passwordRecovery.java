@@ -38,7 +38,7 @@ public class passwordRecovery {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(450, 200, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -60,6 +60,89 @@ public class passwordRecovery {
 		
 		//text field for user to enter username
 		usernameText = new JTextField();
+		usernameText.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+
+				//exception handling for database connection
+				try {
+					
+					//string to hold security question once received from database
+					String secQuest = "";
+					
+					//string to hold security question answer once received from database
+					String secAnswer="";
+					
+					//string for user answer to security question to be compared to database entry
+					String userAnswer = "";
+					
+					//string for password to be held once recieved from the database
+					String password = "";
+					
+					//get a connection to the database
+					Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
+					//create a statement
+					Statement myStat = myConn.createStatement();
+					//creates result set
+					ResultSet myRs;	
+						
+					//collects user name from the user name text field and assigns to a string called user
+					String user = usernameText.getText().trim();
+				
+					//SQL query to check if username is in database
+					String sqlSecCheck = "SELECT * FROM `flights`.`user` where username = '" + user + "'";
+					
+					//executes above query
+					myRs = myStat.executeQuery(sqlSecCheck);
+					
+					//Creates a variable for future checking if result set is valid
+					int count = 0;
+					
+					//While loop that will determine if user is in the database
+					while(myRs.next()){
+						
+						count = count + 1;
+						//sets security question to database entry 
+						secQuest = myRs.getString("security_question");
+						
+						//sets security answer from database to be compared to user answer
+						secAnswer = myRs.getString("security_answer");
+						
+						//stores password from database
+						password = myRs.getString("password");
+						
+						
+						
+						}
+					//if username is in database these actions will be performed:
+					if (count==1) {
+							//prompts user to answer security question
+							userAnswer = JOptionPane.showInputDialog(secQuest);
+					}
+					//if account is not in database it will perform these actions:
+					else {
+						//informs user that the username they entered is not in the system
+						JOptionPane.showMessageDialog(null, "There is no user with the username " + user);
+					}
+					
+					//if user is prompted for security answer it will compare to the value in the database
+					if (count==1 &&  secAnswer.equals(userAnswer)) {
+						//if value is the same as database it will display users password
+						JOptionPane.showMessageDialog(null, "The password for your account is: " + password);
+					}
+					////if user is prompted for security answer it will compare to the value in the database and is not equal
+					else if(count==1 && secAnswer!=userAnswer)  {
+						//will inform user that their answer to he security question is incorrect
+						JOptionPane.showMessageDialog(null, "That answer is incotrrect. Please try again.");
+					}
+					
+				}
+					
+					catch (Exception ex) {
+						
+					}
+			}
+		});
 		usernameText.setBounds(121, 124, 197, 28);
 		frame.getContentPane().add(usernameText);
 		usernameText.setColumns(10);
@@ -125,18 +208,18 @@ public class passwordRecovery {
 							userAnswer = JOptionPane.showInputDialog(secQuest);
 					}
 					//if account is not in database it will perform these actions:
-					else if (count<1) {
+					else {
 						//informs user that the username they entered is not in the system
 						JOptionPane.showMessageDialog(null, "There is no user with the username " + user);
 					}
 					
 					//if user is prompted for security answer it will compare to the value in the database
-					if (secAnswer.equals(userAnswer)) {
+					if (count==1 &&  secAnswer.equals(userAnswer)) {
 						//if value is the same as database it will display users password
-						JOptionPane.showMessageDialog(null, "the password for your account is: " + password);
+						JOptionPane.showMessageDialog(null, "The password for your account is: " + password);
 					}
 					////if user is prompted for security answer it will compare to the value in the database and is not equal
-					else  {
+					else if(count==1 && secAnswer!=userAnswer)  {
 						//will inform user that their answer to he security question is incorrect
 						JOptionPane.showMessageDialog(null, "That answer is incotrrect. Please try again.");
 					}
