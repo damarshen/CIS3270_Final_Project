@@ -1,5 +1,4 @@
 package GUI_Design;
-import javax.swing.JOptionPane;
 
 import GUI_Design.AlertBox;
 import java.sql.*;
@@ -18,7 +17,7 @@ import javafx.stage.*;
 public class Login extends Application implements EventHandler<ActionEvent> {
 	public static String user="";
 	public static String password = "";
-	
+	public static Scene scene;
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
@@ -28,7 +27,6 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		
 	}
 
-	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
 		primaryStage.setTitle("Log In");
@@ -173,6 +171,16 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		grid.setHalignment(register, HPos.CENTER);
 		
 		Button passwordRecover = new Button("Forgot Password");
+		passwordRecover.setOnAction(e -> {passwordRecovery recoverPage= new passwordRecovery();
+		try {
+			
+			recoverPage.start(primaryStage);
+		} 
+		
+		catch (Exception e1) {
+		}
+			}
+		);
 		grid.setConstraints(passwordRecover, 1, 5);
 		grid.setHalignment(passwordRecover, HPos.CENTER);
 		
@@ -190,7 +198,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		
 		
 		grid.getChildren().addAll(userTxt, passwordTxt, login, register,passwordRecover, usernameLabel, exit, loginLabel,passwordLabel);
-		Scene scene =new Scene(grid, 320, 250);
+		scene =new Scene(grid, 320, 250);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
