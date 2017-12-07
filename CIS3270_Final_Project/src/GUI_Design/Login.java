@@ -1,98 +1,61 @@
 package GUI_Design;
+import javax.swing.JOptionPane;
+
+import GUI_Design.AlertBox;
 import java.sql.*;
-import java.awt.event.*;
-import javax.swing.*;
-import java.awt.*;
+import GUI_Design.mainPage;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import javafx.event.*;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
-
-public class Login {
-	//connection variable
-	Connection myConn ; 
-	//statement variable
-	Statement myStat;
-	//query variable
-	ResultSet myRs;
+public class Login extends Application implements EventHandler<ActionEvent> {
+	public static String user="";
+	public static String password = "";
 	
-	public static String user ="";
-	//Jframe variable
-	private static JFrame frame;
-	//Creates a text field
-	private JTextField textFieldUSer;
-	//creates a password field
-	private JPasswordField passwordField;
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
+		// TODO Auto-generated method stub
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Login window = new Login();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
-	
-
-	/**
-	 * Create the application.
-	 */
-	public Login() {
-		initialize();
+		
+		launch(args);
+		
+		
 	}
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		//GUI frame
-		frame = new JFrame();
-		frame.setBounds(450, 200, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		frame.setVisible(false);
+	@Override
+	public void start(Stage primaryStage) throws Exception {
 		
-		//Frame label
-		JLabel loginLabel = new JLabel("Enter Your Username & Password");
-		loginLabel.setBounds(0, 0, 434, 28);
-		loginLabel.setVerticalAlignment(SwingConstants.BOTTOM);
-		loginLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		loginLabel.setFont(new Font("Calibri", Font.BOLD, 23));
-		frame.getContentPane().add(loginLabel);
+		primaryStage.setTitle("Log In");
+		primaryStage.setResizable(false);
+		GridPane grid = new GridPane();
+		//grid.setGridLinesVisible(true);
+		grid.setPadding(new Insets(10,10,10,10));
+		grid.setVgap(10);
+		grid.setHgap(10);
 		
-		//Label for username field
-		JLabel username_label = new JLabel("Username:");
-		username_label.setFont(new Font("Calibri", Font.BOLD, 20));
-		username_label.setBounds(30, 68, 124, 20);
-		frame.getContentPane().add(username_label);
 		
-		//Label for password field
-		JLabel passwordLabel = new JLabel("Password:");
-		passwordLabel.setFont(new Font("Calibri", Font.BOLD, 20));
-		passwordLabel.setBounds(27, 121, 124, 20);
-		frame.getContentPane().add(passwordLabel);
+		Label loginLabel =new Label("Enter your username and password");
+		grid.setConstraints(loginLabel, 1, 0);
+		grid.setAlignment(Pos.TOP_CENTER);
 		
-		//Creates text field for username to be entered
-		textFieldUSer = new JTextField();
-		textFieldUSer.setBounds(161, 68, 124, 20);
-		frame.getContentPane().add(textFieldUSer);
-		textFieldUSer.setColumns(10);
+		Label usernameLabel = new Label("Username:");
+		grid.setConstraints(usernameLabel, 0, 1);
 		
-		//Creates password field for password to be entered with action listener for enter key
-		passwordField = new JPasswordField();
-		passwordField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				//Exception handling for connecting to the database
-				try {
+		TextField userTxt = new TextField();
+		grid.setConstraints(userTxt, 1, 1);
+		
+		Label passwordLabel = new Label("Password:");
+		grid.setConstraints(passwordLabel, 0, 2);
+		
+		PasswordField passwordTxt = new PasswordField();
+		passwordTxt.setOnAction(e ->{//Exception handling for connecting to the database
+			try {
 				//get a connection to the database
 				Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
 				//create a statement
@@ -101,10 +64,10 @@ public class Login {
 				ResultSet myRs;	
 					
 				//collects user name from the user name text field and assigns to a string called user
-				user = textFieldUSer.getText().trim();
+				user = userTxt.getText().trim();
 				
 				//Collects password from the password text field and assigns to a string called password
-				String password = passwordField.getText().trim();
+				String password = passwordTxt.getText().trim();
 				
 				//SQL query to check if user  name and password is in database
 				String sqlUserCheck = "SELECT `username` FROM `flights`.`user` where username = '" + user + "' and password = '" + password + "'";
@@ -122,9 +85,7 @@ public class Login {
 				
 				//If user is in the database and the password is correct it it will take user to main page
 				if (count==1) {
-					Login.frame.setVisible(false);
-					mainPage info =new mainPage();
-					mainPage.main(null);
+				
 					
 				}
 				
@@ -133,7 +94,7 @@ public class Login {
 				 *  or prompts the user to register if they do not have an account
 				**/
 				else if (count<1) {
-					JOptionPane.showMessageDialog(null, "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account.");
+					AlertBox.display("Incorrect Log In", "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account.");
 				}
 				
 				}
@@ -141,107 +102,107 @@ public class Login {
 				catch(Exception ex){
 					
 				}
-			}
+			
+			
 		});
-		passwordField.setBounds(161, 121, 124, 20);
-		frame.getContentPane().add(passwordField);
 		
-		//Log in button
-		JButton btnLogIn = new JButton("Log In");
-		btnLogIn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				//Exception handling for connecting to the database
-				try {
-				//get a connection to the database
-				Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
-				//create a statement
-				Statement myStat = myConn.createStatement();
-				//execute a query
-				ResultSet myRs;	
-					
-				//collects user name from the user name text field and assigns to a string called user
-				user = textFieldUSer.getText().trim();
-				
-				//Collects password from the password text field and assigns to a string called password
-				String password = passwordField.getText().trim();
-				
-				//SQL query to check if user  name and password is in database
-				String sqlUserCheck = "SELECT `username` FROM `flights`.`user` where username = '" + user + "' and password = '" + password + "'";
-				myRs = myStat.executeQuery(sqlUserCheck);
-				
-				//Creates a variable for future checking
-				int count = 0;
-				
-				//While loop that will determine if user is in the database
-				while(myRs.next()){
-					
-					count = count + 1;
-					
-					}
-				
-				//If user is in the database and the password is correct it it will take user to main page
-				if (count==1) {
-					Login.frame.setVisible(false);
-					mainPage info =new mainPage();
-					mainPage.main(null);
-					
-				}
-				
-				/**If user is not in database or password is incorrect, an error message is displayed prompting 
-				 *  change in user name or password, attempt password recovery, 
-				 *  or prompts the user to register if they do not have an account
-				**/
-				else if (count<1) {
-					JOptionPane.showMessageDialog(null, "Username and password combination is either incorrect or the account does not exist.\n Please select The forgot password if your password is unknonwn, or the register option to create an account.");
-				}
-				
-				}
-			
-				catch(Exception ex){
-					
-				}
-				
-				
+		
+		grid.setConstraints(passwordTxt, 1, 2);
+		
+		
+		//login button and event handler
+		Button login =new Button("Log In");
+		login.setOnAction(e -> {
 
+			
+			//Exception handling for connecting to the database
+			try {
+			//get a connection to the database
+			Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
+			//create a statement
+			Statement myStat = myConn.createStatement();
+			//execute a query
+			ResultSet myRs;	
+				
+			//collects user name from the user name text field and assigns to a string called user
+			user = userTxt.getText().trim();
+			
+			//Collects password from the password text field and assigns to a string called password
+			String password = passwordTxt.getText().trim();
+			
+			//SQL query to check if user  name and password is in database
+			String sqlUserCheck = "SELECT `username` FROM `flights`.`user` where username = '" + user + "' and password = '" + password + "'";
+			myRs = myStat.executeQuery(sqlUserCheck);
+			
+			//Creates a variable for future checking
+			int count = 0;
+			
+			//While loop that will determine if user is in the database
+			while(myRs.next()){
+				
+				count = count + 1;
+				
+				}
+			
+			//If user is in the database and the password is correct it it will take user to main page
+			if (count==1) {
+			
+				
 			}
-		});
-		btnLogIn.setBounds(30, 165, 141, 28);
-		frame.getContentPane().add(btnLogIn);
-		
-		//Takes user to registration page
-		JButton btnRegister = new JButton("Register");
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Register info =new Register();
-				Register.main(null);
+			
+			/**If user is not in database or password is incorrect, an error message is displayed prompting 
+			 *  change in user name or password, attempt password recovery, 
+			 *  or prompts the user to register if they do not have an account
+			**/
+			else if (count<1) {
+				AlertBox.display("Incorrect Log In", "Username and password combination is either incorrect or the account does not exist.\n Please select The 'Forgot Password' option if your password is unknonwn, \n or the register option to create an account.");
 			}
-		});
-		btnRegister.setBounds(260, 165, 141, 28);
-		frame.getContentPane().add(btnRegister);
-		
-		
-		//Exits the program
-		JButton btnNewButton = new JButton("Exit");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				JOptionPane.showMessageDialog(null, "The program will now exit.");
-				System.exit(0);
+			
 			}
-		});
-		btnNewButton.setBounds(260, 211, 141, 28);
-		frame.getContentPane().add(btnNewButton);
 		
-		//Takes user to password recovery page
-		JButton btnForgotPassword = new JButton("Forgot Password");
-		btnForgotPassword.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Login.frame.setVisible(false);
-				passwordRecovery info =new passwordRecovery();
-				passwordRecovery.main(null);
+			catch(Exception ex){
+				
+			};
 			}
-		});
-		btnForgotPassword.setBounds(30, 211, 141, 28);
-		frame.getContentPane().add(btnForgotPassword);
+		);
+		grid.setConstraints(login, 1, 3);
+		grid.setHalignment(login, HPos.CENTER);
+		
+		Button register = new Button("Register");
+		grid.setConstraints(register, 1, 4);
+		grid.setHalignment(register, HPos.CENTER);
+		
+		Button passwordRecover = new Button("Forgot Password");
+		grid.setConstraints(passwordRecover, 1, 5);
+		grid.setHalignment(passwordRecover, HPos.CENTER);
+		
+		Button exit =new Button("Exit");
+		grid.setConstraints(exit, 1, 6);
+		grid.setHalignment(exit, HPos.CENTER);
+		exit.setOnAction(e ->{
+			AlertBox.display("Exit", "System Will Now Exit.");
+		System.exit(0);});
+		
+		exit.setMinWidth(150);
+		register.setMinWidth(150);
+		passwordRecover.setMinWidth(150);
+		login.setMinWidth(150);
+		
+		
+		grid.getChildren().addAll(userTxt, passwordTxt, login, register,passwordRecover, usernameLabel, exit, loginLabel,passwordLabel);
+		Scene scene =new Scene(grid, 320, 250);
+		
+		primaryStage.setScene(scene);
+		primaryStage.show();
 	}
+
+	@Override
+	public void handle(ActionEvent event) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	
+
 }

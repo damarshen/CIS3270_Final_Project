@@ -1,5 +1,9 @@
 package JDBC;
 import java.sql.*;
+
+import GUI_Design.Connection;
+import GUI_Design.ResultSet;
+import GUI_Design.Statement;
 public class Driver {
 
 	public static void main(String[] args) {
@@ -30,3 +34,10 @@ public class Driver {
 	}
 
 }
+
+//connection variable
+	Connection myConn ; 
+	//statement variable
+	Statement myStat;
+	//query variable
+	ResultSet myRs;
