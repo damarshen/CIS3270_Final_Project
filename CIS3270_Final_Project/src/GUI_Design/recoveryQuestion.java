@@ -1,17 +1,22 @@
 package GUI_Design;
-import GUI_Design.AlertBox;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.event.*;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.*;
+import javafx.stage.Stage;
 public class recoveryQuestion extends Application implements EventHandler<ActionEvent> {
 	
 	public static void main(String[] args) {
@@ -53,7 +58,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 		Statement myStat = myConn.createStatement();
 		//execute a query
 		ResultSet myRs;	
-		String sqlUserCheck = "SELECT `security_question` FROM `flights`.`user` where username = '" + user + "'";
+		String sqlUserCheck = "SELECT `security_question` FROM `flights`.`users` where username = '" + user + "'";
 		myRs = myStat.executeQuery(sqlUserCheck);
 		
 		//Creates a variable for future checking
@@ -111,7 +116,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 			Statement myStat = myConn.createStatement();
 			//execute a query
 			ResultSet myRs;	
-			String sqlUserCheck = "SELECT * FROM `flights`.`user` where username = '" + user + "'";
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + user + "'";
 			myRs = myStat.executeQuery(sqlUserCheck);
 			
 			//Creates a variable for future checking

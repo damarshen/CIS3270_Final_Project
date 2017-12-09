@@ -1,21 +1,16 @@
 package GUI_Design;
 
-import java.awt.EventQueue;
-
-import GUI_Design.AlertBox;
-import java.sql.*;
-import GUI_Design.mainPage;
 import javafx.application.Application;
-import javafx.stage.Stage;
-import javafx.event.*;
-import javafx.geometry.HPos;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
-import javafx.stage.*;
+import javafx.stage.Stage;
 public class mainPage extends Application implements EventHandler<ActionEvent> {
 
 	public static void main(String[] args) {
@@ -37,18 +32,28 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         Button logOut = new Button();
 
       
-        userId.setAlignment(javafx.geometry.Pos.CENTER);
-        userId.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
-        userId.setLayoutX(350.0);
-        userId.setLayoutY(10.0);
-        userId.setText("Logged in as: " + Login.user);
-        userId.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
-        userId.setFont(new Font(18.0));
+		userId.setAlignment(javafx.geometry.Pos.CENTER);
+		userId.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
+		userId.setLayoutX(350.0);
+		userId.setLayoutY(10.0);
+		userId.setText("Logged in as: " + Login.user);
+		userId.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
+		userId.setFont(new Font(18.0));
 
         searchFlights.setLayoutX(417.0);
         searchFlights.setLayoutY(99.0);
         searchFlights.setMnemonicParsing(false);
         searchFlights.setText("Search Flights");
+        searchFlights.setOnAction(e ->{
+        	searchPage search = new searchPage();
+        	try {
+				search.start(primaryStage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+        	
+        });
 
         table.setLayoutX(10.0);
         table.setLayoutY(57.0);
