@@ -1,10 +1,6 @@
 package GUI_Design;
 import GUI_Design.AlertBox;
 import java.sql.*;
-
-import javax.swing.JOptionPane;
-
-import GUI_Design.mainPage;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.event.*;

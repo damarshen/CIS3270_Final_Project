@@ -12,6 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.*;
 
 public class Login extends Application implements EventHandler<ActionEvent> {
@@ -31,27 +32,40 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		
 		primaryStage.setTitle("Log In");
 		primaryStage.setResizable(false);
-		GridPane grid = new GridPane();
-		//grid.setGridLinesVisible(true);
-		grid.setPadding(new Insets(10,10,10,10));
-		grid.setVgap(10);
-		grid.setHgap(10);
+		AnchorPane anchor = new AnchorPane();
+		//anchor.setanchorLinesVisible(true);
+		anchor.setPadding(new Insets(10,10,10,10));
+		
 		
 		
 		Label loginLabel =new Label("Enter your username and password");
-		grid.setConstraints(loginLabel, 1, 0);
-		grid.setAlignment(Pos.TOP_CENTER);
+		loginLabel.setAlignment(javafx.geometry.Pos.CENTER);
+        loginLabel.setLayoutX(144.0);
+        loginLabel.setLayoutY(51.0);
+        loginLabel.setPrefHeight(32.0);
+        loginLabel.setPrefWidth(351.0);
+        loginLabel.setText("Enter Your Username And Password");
+        loginLabel.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+        loginLabel.setFont(new Font(22.0));
 		
 		Label usernameLabel = new Label("Username:");
-		grid.setConstraints(usernameLabel, 0, 1);
+		usernameLabel.setLayoutX(189.0);
+        usernameLabel.setLayoutY(131.0);
+        usernameLabel.setText("Username:");
+        usernameLabel.setFont(new Font(20.0));
 		
 		TextField userTxt = new TextField();
-		grid.setConstraints(userTxt, 1, 1);
+		userTxt.setLayoutX(311.0);
+        userTxt.setLayoutY(133.0);
 		
 		Label passwordLabel = new Label("Password:");
-		grid.setConstraints(passwordLabel, 0, 2);
+		passwordLabel.setLayoutX(193.0);
+        passwordLabel.setLayoutY(174.0);
+        passwordLabel.setFont(new Font(20.0));
 		
 		PasswordField passwordTxt = new PasswordField();
+		passwordTxt.setLayoutX(311.0);
+		passwordTxt.setLayoutY(177.0);
 		passwordTxt.setOnAction(e ->{//Exception handling for connecting to the database
 			try {
 				//get a connection to the database
@@ -83,7 +97,9 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 				
 				//If user is in the database and the password is correct it it will take user to main page
 				if (count==1) {
-				
+					mainPage MainPage = new mainPage();
+					MainPage.start(primaryStage);
+					
 					
 				}
 				
@@ -104,12 +120,18 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 			
 		});
 		
-		
-		grid.setConstraints(passwordTxt, 1, 2);
+
 		
 		
 		//login button and event handler
 		Button login =new Button("Log In");
+		login.setLayoutX(237.0);
+        login.setLayoutY(222.0);
+        login.setMnemonicParsing(false);
+        login.setPrefHeight(25.0);
+        login.setPrefWidth(149.0);
+        login.setText("Log In");
+
 		login.setOnAction(e -> {
 
 			
@@ -144,7 +166,8 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 			
 			//If user is in the database and the password is correct it it will take user to main page
 			if (count==1) {
-			
+				mainPage MainPage = new mainPage();
+				MainPage.start(primaryStage);
 				
 			}
 			
@@ -163,14 +186,20 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 			};
 			}
 		);
-		grid.setConstraints(login, 1, 3);
-		grid.setHalignment(login, HPos.CENTER);
 		
 		Button register = new Button("Register");
-		grid.setConstraints(register, 1, 4);
-		grid.setHalignment(register, HPos.CENTER);
+		register.setLayoutX(237.0);
+        register.setLayoutY(255.0);
+        register.setMnemonicParsing(false);
+        register.setPrefHeight(25.0);
+        register.setPrefWidth(149.0);
 		
 		Button passwordRecover = new Button("Forgot Password");
+		passwordRecover.setLayoutX(236.0);
+        passwordRecover.setLayoutY(290.0);
+        passwordRecover.setMnemonicParsing(false);
+        passwordRecover.setPrefHeight(26.0);
+        passwordRecover.setPrefWidth(150.0);
 		passwordRecover.setOnAction(e -> {passwordRecovery recoverPage= new passwordRecovery();
 		try {
 			
@@ -181,14 +210,16 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		}
 			}
 		);
-		grid.setConstraints(passwordRecover, 1, 5);
-		grid.setHalignment(passwordRecover, HPos.CENTER);
+
 		
-		Button exit =new Button("Exit");
-		grid.setConstraints(exit, 1, 6);
-		grid.setHalignment(exit, HPos.CENTER);
+		Button exit =new Button("exit");
+		exit.setLayoutX(236.0);
+        exit.setLayoutY(328.0);
+        exit.setMnemonicParsing(false);
+        exit.setPrefHeight(25.0);
+        exit.setPrefWidth(150.0);
 		exit.setOnAction(e ->{
-			AlertBox.display("Exit", "System Will Now Exit.");
+			AlertBox.display("exit", "System Will Now exit.");
 		System.exit(0);});
 		
 		exit.setMinWidth(150);
@@ -197,8 +228,8 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		login.setMinWidth(150);
 		
 		
-		grid.getChildren().addAll(userTxt, passwordTxt, login, register,passwordRecover, usernameLabel, exit, loginLabel,passwordLabel);
-		scene =new Scene(grid, 320, 250);
+		anchor.getChildren().addAll(userTxt, passwordTxt, login, register,passwordRecover, usernameLabel, exit, loginLabel,passwordLabel);
+		scene =new Scene(anchor, 600, 400);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();

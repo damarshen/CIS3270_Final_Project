@@ -3,7 +3,6 @@ package GUI_Design;
 import GUI_Design.AlertBox;
 import GUI_Design.Login;
 import java.sql.*;
-import GUI_Design.mainPage;
 import GUI_Design.recoveryQuestion;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -14,8 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+
 import javafx.stage.*;
 
 public class passwordRecovery extends Application implements EventHandler<ActionEvent> {
