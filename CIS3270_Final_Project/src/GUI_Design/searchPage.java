@@ -1,12 +1,15 @@
 package GUI_Design;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.Time;
 
 import Objects.Flights.Flight;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,8 +18,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -28,7 +33,6 @@ import javafx.stage.Stage;
 
 public class searchPage extends Application implements EventHandler<ActionEvent> {
 	private ObservableList<ObservableList> data;
-	private TableView tableview;
 
 	public static void main(String[] args) {
 		launch(args);
@@ -40,6 +44,9 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		primaryStage.setResizable(false);
 		AnchorPane anchor = new AnchorPane();
 		anchor.setPadding(new Insets(20, 20, 20, 20));
+		
+		TableView<Flight> table = new TableView<>();
+		final ObservableList<Flight> data = FXCollections.observableArrayList();
 
 		ChoiceBox<String> dropdown = new ChoiceBox<>();
 		dropdown.getItems().addAll("Destnation", "Origin", "Date", "Departure Time", "Airline");
@@ -74,13 +81,13 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 				Connection myConn = DriverManager.getConnection(
 						"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
 						"Tdgiheay12");
+				String sqlUserCheck = "SELECT * FROM flights.flight WHERE " + dbSearch + " = '" + searchItem + "'";
 				// create a statement
-				Statement myStat = myConn.createStatement();
+				PreparedStatement myStat = myConn.prepareStatement(sqlUserCheck);
 				// execute a query
 				ResultSet myRs;
-
-				String sqlUserCheck = "SELECT * FROM `flights`.`flight` WHERE " + dbSearch + " = '" + searchItem + "'";
-				myRs = myStat.executeQuery(sqlUserCheck);
+				myRs = myStat.executeQuery();
+				table.getItems().clear();
 
 				// Creates a variable for future checking
 				int count = 0;
@@ -89,21 +96,70 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 
 					count += 1;
 
-					System.out.println(myRs.getString("airline"));
-
+					data.add(new Flight(
+							myRs.getInt("number"),
+							myRs.getString("airline"),
+							myRs.getString("origin_city"),
+							myRs.getString("destination_city"),
+							myRs.getString("departure_date"),
+							myRs.getTime("departure_time"),
+							myRs.getString("arrival_date"),
+							myRs.getTime("arrival_time"),
+							myRs.getInt("seats_available")));
+					table.setItems(data);
 				}
-
-			} catch (Exception ex) {
+				myStat.close();
+				myRs.close();
+;			} catch (Exception ex) {
 
 			}
 		});
 
-		TableView<Flight> table = new TableView<>();
+		
+		
+		TableColumn<Flight, Integer> column1 = new TableColumn<Flight, Integer>("Flight Number");
+		column1.setCellValueFactory(new PropertyValueFactory<>("flightNumber"));
+		column1.setMinWidth(128.88);
+		
+		TableColumn<Flight, String> column2 = new TableColumn<Flight, String>("Airline");
+		column2.setCellValueFactory(new PropertyValueFactory<>("Airline"));
+		column2.setMinWidth(128.88);
+
+		TableColumn<Flight, String> column3 = new TableColumn<Flight, String>("Origin City");
+		column3.setCellValueFactory(new PropertyValueFactory<>("originCity"));
+		column3.setMinWidth(128.88);
+		
+		TableColumn<Flight, String> column4 = new TableColumn<Flight, String>("Destination City");
+		column4.setCellValueFactory(new PropertyValueFactory<>("destinationCity"));
+		column4.setMinWidth(128.88);
+		
+		TableColumn<Flight, Date> column5 = new TableColumn<Flight, Date>("Departure Date");
+		column5.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
+		column5.setMinWidth(128.88);
+		
+		TableColumn<Flight, Time> column6 = new TableColumn<Flight, Time>("Departure Time");
+		column6.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
+		column6.setMinWidth(128.88);
+		
+		TableColumn<Flight, Date> column7 = new TableColumn<Flight, Date>("Arrival Date");
+		column7.setCellValueFactory(new PropertyValueFactory<>("arrivalDate"));
+		column7.setMinWidth(128.88);
+		
+		TableColumn<Flight, Time> column8 = new TableColumn<Flight, Time>("Arrival Time");
+		column8.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
+		column8.setMinWidth(128.88);
+		
+		TableColumn<Flight, Integer> column9 = new TableColumn<Flight, Integer>("Seats Available");
+		column9.setCellValueFactory(new PropertyValueFactory<>("seatsAvailable"));
+		column9.setMinWidth(128.88);
+		
+		table.setTableMenuButtonVisible(true);
+		
 		table.setLayoutY(100);
 		table.setLayoutX(20);
 		table.setMinWidth(1160);
 		table.setMinHeight(580);
-
+		table.getColumns().addAll(column1, column2, column3, column4, column5, column6, column7, column8, column9);
 		anchor.getChildren().addAll(dropdown, userId, searchTxt, searchButton, table);
 		Scene scene = new Scene(anchor, 1200, 700);
 
@@ -139,4 +195,6 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		return dbSearch;
 
 	}
+	
+
 }

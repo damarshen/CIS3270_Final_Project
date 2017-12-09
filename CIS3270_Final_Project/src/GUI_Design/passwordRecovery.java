@@ -40,21 +40,21 @@ public class passwordRecovery extends Application implements EventHandler<Action
 		grid.setHgap(10);
 
 		Label passwordRecoverLabel = new Label("Recover Your Password");
-		grid.setConstraints(passwordRecoverLabel, 1, 0);
+		GridPane.setConstraints(passwordRecoverLabel, 1, 0);
 		grid.setAlignment(Pos.TOP_CENTER);
-		grid.setHalignment(passwordRecoverLabel, HPos.CENTER);
+		GridPane.setHalignment(passwordRecoverLabel, HPos.CENTER);
 
 		Label usernameLabel = new Label("Enter Your Username Below");
-		grid.setConstraints(usernameLabel, 1, 1);
+		GridPane.setConstraints(usernameLabel, 1, 1);
 		grid.setAlignment(Pos.TOP_CENTER);
-		grid.setHalignment(usernameLabel, HPos.CENTER);
+		GridPane.setHalignment(usernameLabel, HPos.CENTER);
 
 		TextField username = new TextField();
-		grid.setConstraints(username, 1, 2);
+		GridPane.setConstraints(username, 1, 2);
 		grid.setAlignment(Pos.CENTER);
 
 		Button recover = new Button("Recover Password");
-		grid.setConstraints(recover, 1, 4);
+		GridPane.setConstraints(recover, 1, 4);
 		recover.setOnAction(e -> {
 
 			try {
@@ -106,7 +106,7 @@ public class passwordRecovery extends Application implements EventHandler<Action
 		});
 
 		Button login = new Button("Return To Log In");
-		grid.setConstraints(login, 1, 5);
+		GridPane.setConstraints(login, 1, 5);
 		login.setOnAction(e -> {
 			Login loginPage = new Login();
 			try {

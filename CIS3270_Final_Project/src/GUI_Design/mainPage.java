@@ -18,6 +18,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 	}
 	
 		
+	@Override
 	public void start(Stage primaryStage) throws Exception {
 		primaryStage.setTitle("");
 		primaryStage.setResizable(false);

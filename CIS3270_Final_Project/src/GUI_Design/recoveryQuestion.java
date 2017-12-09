@@ -92,31 +92,33 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 	
 	
 	Label securityQuestionLabel =new Label("Enter The Answer To Your Security Question Below.");
-	grid.setConstraints(securityQuestionLabel , 1, 0);
+	GridPane.setConstraints(securityQuestionLabel , 1, 0);
 	grid.setAlignment(Pos.TOP_CENTER);
 	securityQuestionLabel.setTextAlignment(TextAlignment.CENTER);
 	
 	Label questionLabel = new Label (secQuest);
-	grid.setConstraints(questionLabel , 1, 1);
+	GridPane.setConstraints(questionLabel , 1, 1);
 	
 	TextField answerField = new TextField();
-	grid.setConstraints(answerField, 1, 2);
+	GridPane.setConstraints(answerField, 1, 2);
 	
 	
 	Button okay = new Button("Okay");
-	grid.setConstraints(okay, 1	, 3);
-	grid.setHalignment(okay,HPos.LEFT);
+	GridPane.setConstraints(okay, 1	, 3);
+	GridPane.setHalignment(okay,HPos.LEFT);
 	okay.setOnAction(e ->{
 		
 		try {
-			//get a connection to the database
-			String userAnswer = answerField.getText().trim();
-			Connection myConn = DriverManager.getConnection("jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root", "Tdgiheay12");
-			//create a statement
-			Statement myStat = myConn.createStatement();
-			//execute a query
-			ResultSet myRs;	
-			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + user + "'";
+				// get a connection to the database
+				String userAnswer = answerField.getText().trim();
+				Connection myConn = DriverManager.getConnection(
+						"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+						"Tdgiheay12");
+				// create a statement
+				Statement myStat = myConn.createStatement();
+				// execute a query
+				ResultSet myRs;
+				String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + user + "'";
 			myRs = myStat.executeQuery(sqlUserCheck);
 			
 			//Creates a variable for future checking
@@ -151,8 +153,8 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 	});
 	
 	Button cancel = new Button("cancel");
-	grid.setConstraints(cancel, 1	, 3);
-	grid.setHalignment(cancel,HPos.RIGHT);
+	GridPane.setConstraints(cancel, 1	, 3);
+	GridPane.setHalignment(cancel,HPos.RIGHT);
 	cancel.setOnAction(e -> {{passwordRecovery recoverPage= new passwordRecovery();
 	try {
 		
