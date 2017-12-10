@@ -20,6 +20,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 		
 	}
 		String user = passwordRecovery.user;
+		
 		String secQuest = "";
 		//string to hold security question answer once received from database
 		String secAnswer="";
@@ -70,6 +71,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 			}
 		myStat.close();
 		myRs.close();
+		myConn.close();
 		//If user is in the database and the password is correct it it will take user to main page
 		if (count==1) {
 			
@@ -128,7 +130,10 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 				//stores password from database
 				password = myRs.getString("password");
 				}
-			
+
+			myRs.close();
+			myStat.close();
+			myConn.close();
 			//If user is in the database and the password is correct it it will take user to main page
 			if (count==1 && userAnswer.equals(secAnswer)) {
 				AlertBox.display("Password", "The password for your account is: " + password);
@@ -139,6 +144,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 			}
 			
 		} 
+		
 		catch (Exception e1) {
 					
 				}

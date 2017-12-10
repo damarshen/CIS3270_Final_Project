@@ -1,6 +1,8 @@
 package Objects.Flights;
 
+import java.sql.Date;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -20,9 +22,10 @@ private String originCity;
 private String destinationCity;
 private Time departureTime;
 private Time arrivalTime;
-private String departureDate;
-private String arrivalDate;
+private Date departureDate;
+private Date arrivalDate;
 private boolean isFull;
+private Timestamp time;
  
 public Flight(){
 	
@@ -36,7 +39,20 @@ public Flight(String airline, int flightNumber, String originCity, String destin
 	this.destinationCity = destinationCity;
 }
 
-public Flight( int flightNumber,String airline, String originCity, String destinationCity, String departureDate, Time departureTime, String arrivalDate, Time arrivalTime,int seatsAvailable) {
+public Flight( int flightNumber,String airline, String originCity, String destinationCity, Date departureDate, Time departureTime, Date arrivalDate, Time arrivalTime,int seatsAvailable, Timestamp time) {
+	super();
+	this.airline = airline;
+	this.flightNumber = flightNumber;
+	this.originCity = originCity;
+	this.destinationCity = destinationCity;
+	this.departureDate = departureDate;
+	this.departureTime = departureTime;
+	this.arrivalDate = arrivalDate;
+	this.arrivalTime = arrivalTime;
+	this.seatsAvailable = seatsAvailable;
+	this.time = time;
+}
+public Flight( int flightNumber,String airline, String originCity, String destinationCity, Date departureDate, Time departureTime, Date arrivalDate, Time arrivalTime,int seatsAvailable) {
 	super();
 	this.airline = airline;
 	this.flightNumber = flightNumber;
@@ -49,7 +65,8 @@ public Flight( int flightNumber,String airline, String originCity, String destin
 	this.seatsAvailable = seatsAvailable;
 }
 
-public Flight( int flightNumber,String airline, String originCity, String destinationCity, String departureDate, Time departureTime, String arrivalDate, Time arrivalTime) {
+
+public Flight( int flightNumber,String airline, String originCity, String destinationCity, Date departureDate, Time departureTime, Date arrivalDate, Time arrivalTime) {
 	super();
 	this.airline = airline;
 	this.flightNumber = flightNumber;
@@ -134,19 +151,19 @@ public void setArrivalTime(Time arrivalTime) {
 	this.arrivalTime = arrivalTime;
 }
 
-public String getDepartureDate() {
+public Date getDepartureDate() {
 	return departureDate;
 }
 
-public void setDepartureDate(String departureDate) {
+public void setDepartureDate(Date departureDate) {
 	this.departureDate = departureDate;
 }
 
-public String getArrivalDate() {
+public Date getArrivalDate() {
 	return arrivalDate;
 }
 
-public void setArrivalDate(String arrivalDate) {
+public void setArrivalDate(Date arrivalDate) {
 	this.arrivalDate = arrivalDate;
 }
 

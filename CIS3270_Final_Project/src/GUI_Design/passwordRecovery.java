@@ -69,8 +69,9 @@ public class passwordRecovery extends Application implements EventHandler<Action
 					count = count + 1;
 
 				}
-				myStat.close();
 				myRs.close();
+				myStat.close();
+				myConn.close();
 
 				// If user is in the database and the password is correct it it will take user
 				// to main page

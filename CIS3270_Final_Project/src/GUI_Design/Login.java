@@ -13,6 +13,7 @@ import javafx.stage.*;
 public class Login extends Application implements EventHandler<ActionEvent> {
 	public static String user = "";
 	public static String password = "";
+	
 	public static Scene scene;
 
 	public static void main(String[] args) {
@@ -78,7 +79,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 				String password = passwordTxt.getText().trim();
 
 				// SQL query to check if user name and password is in database
-				String sqlUserCheck = "SELECT `username` FROM `flights`.`users` where username = '" + user
+				String sqlUserCheck = "SELECT `username`, `id` FROM `flights`.`users` where username = '" + user
 						+ "' and password = '" + password + "'";
 				myRs = myStat.executeQuery(sqlUserCheck);
 
@@ -87,12 +88,12 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 				// While loop that will determine if user is in the database
 				while (myRs.next()) {
-
 					count = count + 1;
 
 				}
 				myStat.close();
 				myRs.close();
+				myConn.close();
 				// If user is in the database and the password is correct it it will take user
 				// to main page
 				if (count == 1) {
@@ -163,6 +164,10 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 					count = count + 1;
 
 				}
+
+				myRs.close();
+				myStat.close();
+				myConn.close();
 
 				// If user is in the database and the password is correct it it will take user
 				// to main page

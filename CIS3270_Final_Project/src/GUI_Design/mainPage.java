@@ -160,9 +160,9 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 						myRs.getString("airline"),
 						myRs.getString("origin_city"),
 						myRs.getString("destination_city"),
-						myRs.getString("departure_date"),
+						myRs.getDate("departure_date"),
 						myRs.getTime("departure_time"),
-						myRs.getString("arrival_date"),
+						myRs.getDate("arrival_date"),
 						myRs.getTime("arrival_time")));
 				table.setItems(data);
 			}
