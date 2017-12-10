@@ -1,22 +1,13 @@
 package GUI_Design;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
+import java.sql.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.geometry.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
 
 public class passwordRecovery extends Application implements EventHandler<ActionEvent> {
 
@@ -78,6 +69,8 @@ public class passwordRecovery extends Application implements EventHandler<Action
 					count = count + 1;
 
 				}
+				myStat.close();
+				myRs.close();
 
 				// If user is in the database and the password is correct it it will take user
 				// to main page

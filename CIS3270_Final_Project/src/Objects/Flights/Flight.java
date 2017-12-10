@@ -48,6 +48,20 @@ public Flight( int flightNumber,String airline, String originCity, String destin
 	this.arrivalTime = arrivalTime;
 	this.seatsAvailable = seatsAvailable;
 }
+
+public Flight( int flightNumber,String airline, String originCity, String destinationCity, String departureDate, Time departureTime, String arrivalDate, Time arrivalTime) {
+	super();
+	this.airline = airline;
+	this.flightNumber = flightNumber;
+	this.originCity = originCity;
+	this.destinationCity = destinationCity;
+	this.departureDate = departureDate;
+	this.departureTime = departureTime;
+	this.arrivalDate = arrivalDate;
+	this.arrivalTime = arrivalTime;
+
+}
+
 public String getAirline() {
 	return airline;
 }

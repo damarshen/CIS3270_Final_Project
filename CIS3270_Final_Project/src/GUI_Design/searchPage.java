@@ -1,30 +1,18 @@
 package GUI_Design;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Time;
+import java.sql.*;
 
 import Objects.Flights.Flight;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import javafx.application.*;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.geometry.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.stage.*;
 
 /**
  * @author ojall
@@ -53,6 +41,36 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		dropdown.setValue("Destnation");
 		dropdown.setLayoutY(60);
 		dropdown.setLayoutX(340);
+		
+		Button returnHome = new Button("Return Home");
+		returnHome.setOnAction(e ->{
+			mainPage home = new mainPage();
+			try {
+				home.start(primaryStage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		returnHome.setLayoutX(970);
+		returnHome.setLayoutY(60);
+		returnHome.setMinWidth(100);
+		
+		Button logOut = new Button("Log Out");
+		logOut.setOnAction(e -> {
+			Login loginPage = new Login();
+			try {
+				loginPage.start(primaryStage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		logOut.setLayoutX(1080);
+		logOut.setLayoutY(60);
+		logOut.setMinWidth(100);
+		
+		
 
 		Label userId = new Label();
 		userId.setAlignment(javafx.geometry.Pos.CENTER);
@@ -73,7 +91,6 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		searchButton.setLayoutY(60.0);
 		searchButton.setMinWidth(60);
 		searchButton.setOnAction(e -> {
-			System.out.println();
 			try {
 
 				String dbSearch = getChoice(dropdown).trim();
@@ -160,7 +177,7 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		table.setMinWidth(1160);
 		table.setMinHeight(580);
 		table.getColumns().addAll(column1, column2, column3, column4, column5, column6, column7, column8, column9);
-		anchor.getChildren().addAll(dropdown, userId, searchTxt, searchButton, table);
+		anchor.getChildren().addAll(dropdown, userId, searchTxt, searchButton, table, returnHome, logOut );
 		Scene scene = new Scene(anchor, 1200, 700);
 
 		primaryStage.setScene(scene);

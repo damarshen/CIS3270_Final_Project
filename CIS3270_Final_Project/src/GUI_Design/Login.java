@@ -1,22 +1,14 @@
 package GUI_Design;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
+import java.sql.*;
+import javafx.application.*;
+import javafx.event.*;
+import javafx.geometry.*;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.stage.*;
 
 public class Login extends Application implements EventHandler<ActionEvent> {
 	public static String user = "";
@@ -35,7 +27,6 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		primaryStage.setTitle("Log In");
 		primaryStage.setResizable(false);
 		AnchorPane anchor = new AnchorPane();
-		// anchor.setanchorLinesVisible(true);
 		anchor.setPadding(new Insets(10, 10, 10, 10));
 
 		Label loginLabel = new Label("Enter your username and password");
@@ -53,6 +44,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		usernameLabel.setLayoutY(131.0);
 		usernameLabel.setText("Username:");
 		usernameLabel.setFont(new Font(20.0));
+		
 
 		TextField userTxt = new TextField();
 		userTxt.setLayoutX(311.0);
@@ -99,7 +91,8 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 					count = count + 1;
 
 				}
-
+				myStat.close();
+				myRs.close();
 				// If user is in the database and the password is correct it it will take user
 				// to main page
 				if (count == 1) {
