@@ -1,189 +1,146 @@
 package GUI_Design;
 
-import java.awt.EventQueue;
+import Objects.Flights.Flight;
+import javafx.application.*;
+import javafx.collections.*;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.*;
+import javafx.scene.layout.*;
+import javafx.scene.text.*;
+import javafx.stage.*;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.BorderLayout;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JEditorPane;
-import java.awt.Color;
-import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JPasswordField;
-import Objects.Users.*;
+public  class FlightRegistration  extends Application implements EventHandler<ActionEvent>{
 
-public class FlightRegistration {
-
-	private JFrame frame;
-	private JTextField txtFirstName;
-	private JTextField txtLastName;
-	private JTextField txtAddress;
-	private JTextField txtCity;
-	private JTextField txtState;
-	private JTextField txtZipCode;
-	private JTextField txtUserName;
-	private JTextField txtEmail;
-	private JPasswordField txtPassword;
-	private JTextField txtSSN;
-	private JTextField txtSecurityQuestion;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FlightRegistration window = new FlightRegistration();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		launch(args);
+	}
+	
+	public void start(Stage primaryStage) throws Exception {
+		primaryStage.setTitle("Search");
+		AnchorPane anchor = new AnchorPane();
+		anchor.setPadding(new Insets(20, 20, 20, 20));
+		
+		Text airline = new Text("Airline");
+		airline.setLayoutX(200);
+		airline.setLayoutY(45);
+		
+		Text flightNumber = new Text("Flight Number");
+		flightNumber.setLayoutX(200);
+		flightNumber.setLayoutY(80);
+		
+		Text originCity = new Text("Origin City");
+		originCity.setLayoutX(200);
+		originCity.setLayoutY(115);
+		
+		Text destinationCity = new Text ("Destination City");
+		destinationCity.setLayoutX(200);
+		destinationCity.setLayoutY(150);
+		
+		Text departureDate = new Text("Departure Date");
+		departureDate.setLayoutX(200);
+		departureDate.setLayoutY(185);
+		
+		Text departureTime = new Text("Departure Time");
+		departureTime.setLayoutX(200);
+		departureTime.setLayoutY(220);
+		
+		Text arrivalDate = new Text("Arrival Date");
+		arrivalDate.setLayoutX(200);
+		arrivalDate.setLayoutY(255);
+		
+		Text arrivalTime = new Text("Arrival Time");
+		arrivalTime.setLayoutX(200);
+		arrivalTime.setLayoutY(290);
+		
+		Text capacity = new Text("Capacity");
+		capacity.setLayoutX(200);
+		capacity.setLayoutY(330);
+		
+		Text seatsAvailable = new Text("Seats Available");
+		seatsAvailable.setLayoutX(200);
+		seatsAvailable.setLayoutY(365);
+		
+		
+		
+		TextField airlineTxtField = new TextField();
+		airlineTxtField.setLayoutX(300);
+		airlineTxtField.setLayoutY(25);
+		airlineTxtField.setPromptText("Airline");
+		
+		
+		TextField flightNumberTxtField = new TextField();
+		flightNumberTxtField.setLayoutX(300);
+		flightNumberTxtField.setLayoutY(60);
+		flightNumberTxtField.setPromptText("Flight Number");
+		
+		TextField originCityTxtField = new TextField();
+		originCityTxtField.setLayoutX(300);
+		originCityTxtField.setLayoutY(95);
+		originCityTxtField.setPromptText("Origin City");
+		
+		
+		TextField destinationCityTxtField = new TextField ();
+		destinationCityTxtField.setLayoutX(300);
+		destinationCityTxtField.setLayoutY(130);
+		destinationCityTxtField.setPromptText("Destination City");
+		
+		TextField departureDateTxtField = new TextField();
+		departureDateTxtField.setLayoutX(300);
+		departureDateTxtField.setLayoutY(165);
+		departureDateTxtField.setPromptText("YYYY-MM-DD");
+		
+		TextField departureTimeTxtField = new TextField();
+		departureTimeTxtField.setLayoutX(300);
+		departureTimeTxtField.setLayoutY(200);
+		departureTimeTxtField.setPromptText("HH:MM:SS");
+		
+		TextField arrivalDateTxtField = new TextField();
+		arrivalDateTxtField.setLayoutX(300);
+		arrivalDateTxtField.setLayoutY(235);
+		arrivalDateTxtField.setPromptText("YYYY-MM-DD");
+		
+		
+		TextField arrivalTimeTxtField = new TextField();
+		arrivalTimeTxtField.setLayoutX(300);
+		arrivalTimeTxtField.setLayoutY(270);
+		arrivalTimeTxtField.setPromptText("HH:MM:SS");
+		
+		TextField capacityTxtField = new TextField();
+		capacityTxtField.setLayoutX(300);
+		capacityTxtField.setLayoutY(310);
+		capacityTxtField.setPromptText("Capacity");
+		
+		TextField seatsAvailableTxtField = new TextField();
+		seatsAvailableTxtField.setLayoutX(300);
+		seatsAvailableTxtField.setLayoutY(345);
+		seatsAvailableTxtField.setPromptText("Seats Available");
+		
+		
+		
+		
+		anchor.getChildren().addAll(airline, flightNumber, originCity, destinationCity,departureDate, departureTime,
+									arrivalDate, arrivalTime,capacity,seatsAvailable, airlineTxtField,flightNumberTxtField,originCityTxtField,
+									destinationCityTxtField,departureDateTxtField, departureTimeTxtField,arrivalDateTxtField,arrivalTimeTxtField, 
+									capacityTxtField,seatsAvailableTxtField);
+		Scene scene = new Scene(anchor, 1300, 700);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		primaryStage.setResizable(false);
+		primaryStage.setMaximized(false);
+		primaryStage.centerOnScreen();
 	}
 
-	/**
-	 * Create the application.
-	 */
-	public FlightRegistration() {
-		initialize();
+	@Override
+	public void handle(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
-
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(0, 0, 998, 726);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 778, 47);
-		frame.getContentPane().add(panel);
-		
-		JLabel lblFlightsRegistration = new JLabel("Flights Registration");
-		lblFlightsRegistration.setFont(new Font("Tahoma", Font.BOLD, 30));
-		panel.add(lblFlightsRegistration);
-		
-		txtFirstName = new JTextField();
-		txtFirstName.setBounds(320, 111, 108, 26);
-		frame.getContentPane().add(txtFirstName);
-		txtFirstName.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("First / Last Name");
-		lblNewLabel_1.setBounds(85, 106, 138, 36);
-		frame.getContentPane().add(lblNewLabel_1);
-		
-		txtLastName = new JTextField();
-		txtLastName.setBounds(443, 111, 138, 26);
-		frame.getContentPane().add(txtLastName);
-		txtLastName.setColumns(10);
-		
-		JLabel lblAdress = new JLabel("Address");
-		lblAdress.setBounds(85, 168, 69, 20);
-		frame.getContentPane().add(lblAdress);
-		
-		txtAddress = new JTextField();
-		txtAddress.setBounds(320, 165, 261, 26);
-		frame.getContentPane().add(txtAddress);
-		txtAddress.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("City / State / Zip");
-		lblNewLabel.setBounds(85, 210, 138, 20);
-		frame.getContentPane().add(lblNewLabel);
-		
-		txtCity = new JTextField();
-		txtCity.setBounds(320, 207, 99, 26);
-		frame.getContentPane().add(txtCity);
-		txtCity.setColumns(10);
-		
-		txtState = new JTextField();
-		txtState.setBounds(434, 207, 47, 26);
-		frame.getContentPane().add(txtState);
-		txtState.setColumns(10);
-		
-		txtZipCode = new JTextField();
-		txtZipCode.setBounds(496, 207, 85, 26);
-		frame.getContentPane().add(txtZipCode);
-		txtZipCode.setColumns(10);
-		
-		JLabel lblNewLabel_3 = new JLabel("Username");
-		lblNewLabel_3.setBounds(85, 269, 85, 20);
-		frame.getContentPane().add(lblNewLabel_3);
-		
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setBounds(85, 311, 69, 20);
-		frame.getContentPane().add(lblPassword);
-		
-		txtUserName = new JTextField();
-		txtUserName.setBounds(320, 266, 146, 26);
-		frame.getContentPane().add(txtUserName);
-		txtUserName.setColumns(10);
-		
-		JLabel lblNewLabel_4 = new JLabel("Email");
-		lblNewLabel_4.setBounds(85, 370, 69, 20);
-		frame.getContentPane().add(lblNewLabel_4);
-		
-		txtEmail = new JTextField();
-		txtEmail.setBounds(320, 367, 146, 26);
-		frame.getContentPane().add(txtEmail);
-		txtEmail.setColumns(10);
-		
-		JButton btnSubmit = new JButton("Submit");
-		btnSubmit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnSubmit.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-				// save user registration data
-				Users user = new Users();
-				user.setFirstName(txtFirstName.getText());
-				user.setLastName(txtLastName.getText());
-				user.setAddress(txtAddress.getText());
-				//user.setCity(txtCity.getText());
-				user.setState(txtState.getText());
-				//user.setZipCode(txtZipCode.getText());
-				user.setUsername(txtUserName.getText());
-				user.setPassword(txtPassword.toString());
-				user.setEmail(txtEmail.getText());
-				user.setSsn(txtSSN.getText());
-				user.setSecurityQuestion(txtSecurityQuestion.getText());
-				
-				
-			}
-		});
-		btnSubmit.setBounds(320, 557, 146, 29);
-		frame.getContentPane().add(btnSubmit);
-		
-		JLabel lblSsn = new JLabel("SSN");
-		lblSsn.setBounds(85, 423, 69, 20);
-		frame.getContentPane().add(lblSsn);
-		
-		txtPassword = new JPasswordField();
-		txtPassword.setBounds(320, 308, 146, 26);
-		frame.getContentPane().add(txtPassword);
-		
-		txtSSN = new JTextField();
-		txtSSN.setBounds(320, 420, 146, 26);
-		frame.getContentPane().add(txtSSN);
-		txtSSN.setColumns(10);
-		
-		txtSecurityQuestion = new JTextField();
-		txtSecurityQuestion.setBounds(320, 471, 146, 26);
-		frame.getContentPane().add(txtSecurityQuestion);
-		txtSecurityQuestion.setColumns(10);
-		
-		JLabel lblNewLabel_2 = new JLabel("Security Question for pw");
-		lblNewLabel_2.setBounds(85, 474, 184, 20);
-		frame.getContentPane().add(lblNewLabel_2);
-	}
+	
 }

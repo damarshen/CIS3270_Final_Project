@@ -173,6 +173,7 @@ public class recoveryQuestion extends Application implements EventHandler<Action
 	
 	primaryStage.setScene(scene);
 	primaryStage.show();
+	primaryStage.centerOnScreen();
 		
 	}
 

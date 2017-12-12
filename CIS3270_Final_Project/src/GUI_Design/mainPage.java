@@ -18,6 +18,15 @@ import javafx.stage.*;
 public class mainPage extends Application implements EventHandler<ActionEvent> {
 
 	private ObservableList<ObservableList> data;
+	private String usernameId = "";
+
+	public String getUsernameId() {
+		return usernameId;
+	}
+
+	public void setUsernameId(String usernameId) {
+		this.usernameId = usernameId;
+	}
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -39,18 +48,20 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         Label myFlights = new Label();
         Button deleteFlights = new Button();
         Button logOut = new Button();
+        TextField deleteFlightTxt = new TextField();
+        Button refresh = new Button("Refresh");
 
       
 		userId.setAlignment(javafx.geometry.Pos.CENTER);
 		userId.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
 		userId.setLayoutX(970.0);
 		userId.setLayoutY(20.0);
-		userId.setText("Logged in as: " + Login.user);
+		userId.setText("Logged in as: " + Login.getUser());
 		userId.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
 		userId.setFont(new Font(18.0));
 
-        searchFlights.setLayoutX(1057.0);
-        searchFlights.setLayoutY(99.0);
+        searchFlights.setLayoutX(1100.0);
+        searchFlights.setLayoutY(214.0);
         searchFlights.setMnemonicParsing(false);
         searchFlights.setText("Search Flights");
         searchFlights.setOnAction(e ->{
@@ -74,8 +85,56 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         myFlights.setText("My Flights");
         myFlights.setFont(new Font(25.0));
         
-        logOut.setLayoutX(1057.0);
-        logOut.setLayoutY(239.0);
+        refresh.setLayoutX(1100.0);
+        refresh.setLayoutY(179.0);
+        refresh.setMnemonicParsing(false);
+        refresh.setPrefHeight(25);
+        refresh.setPrefWidth(90);
+        refresh.setOnAction(e->{
+        	try {
+
+    			Connection myConn = DriverManager.getConnection(
+    					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+    					"Tdgiheay12");
+    			String sqlUserCheck = "select  `number`, `airline`, `origin_city`, `destination_city`, `departure_time`, `arrival_time`, `departure_date`, `arrival_date` from\r\n" + 
+    					"flights.flight inner Join flights.Flight_User\r\n" + 
+    					"on Flight_id = flight.id\r\n" + 
+    					"inner join flights.users on Flight_User.User_id = users.id where username = '"+ Login.getUser() + "'";
+    			// create a statement
+    			PreparedStatement myStat = myConn.prepareStatement(sqlUserCheck);
+    			// execute a query
+    			ResultSet myRs;
+    			myRs = myStat.executeQuery();
+    			table.getItems().clear();
+
+    			// Creates a variable for future checking
+    			int count = 0;
+
+    			while (myRs.next()) {
+
+    				count += 1;
+
+    				data.add(new Flight(
+    						myRs.getInt("number"),
+    						myRs.getString("airline"),
+    						myRs.getString("origin_city"),
+    						myRs.getString("destination_city"),
+    						myRs.getDate("departure_date"),
+    						myRs.getTime("departure_time"),
+    						myRs.getDate("arrival_date"),
+    						myRs.getTime("arrival_time")));
+    				table.setItems(data);
+    			}
+    			myStat.close();
+    			myRs.close();
+    			} catch (Exception ex) {
+
+    		}
+        	
+        });
+        
+        logOut.setLayoutX(1100.0);
+        logOut.setLayoutY(249.0);
         logOut.setMnemonicParsing(false);
         logOut.setPrefHeight(25);
         logOut.setPrefWidth(90);
@@ -89,13 +148,96 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			}
         });
         
+        
+        try {
+			Connection myConn;
+			myConn = DriverManager.getConnection(
+					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+					"Tdgiheay12");
 
-        deleteFlights.setLayoutX(1057.0);
-        deleteFlights.setLayoutY(169.0);
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + "'";
+			// create a statement
+			Statement myStat = myConn.createStatement();
+			// execute a query
+			ResultSet myRs;
+			myRs = myStat.executeQuery(sqlUserCheck);
+
+			// Creates a variable for future checking
+			int count = 0;
+			while (myRs.next()) {
+				count = count + 1;
+				setUsernameId(myRs.getString("id"));
+				System.out.println(getUsernameId());
+
+			}
+
+		} catch (Exception exc) {
+
+		}
+        
+        Label deleteFlightLbl = new Label("Enter Flight Number to Delete:");
+        deleteFlightLbl.setLayoutX(1065);
+        deleteFlightLbl.setLayoutY(89);
+       
+        
+        deleteFlightTxt.setLayoutX(1100);
+        deleteFlightTxt.setLayoutY(109);
+        deleteFlightTxt.setPrefHeight(25);
+        deleteFlightTxt.setPrefWidth(90);
+        
+        deleteFlights.setLayoutX(1100.0);
+        deleteFlights.setLayoutY(139.0);
         deleteFlights.setMnemonicParsing(false);
         deleteFlights.setPrefHeight(25.0);
         deleteFlights.setPrefWidth(90.0);
         deleteFlights.setText("Delete Flight");
+        deleteFlights.setOnAction(e -> {
+			try {
+
+				Connection myConn;
+				myConn = DriverManager.getConnection(
+						"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+						"Tdgiheay12");
+
+				String sqlFlightDelete = "Delete FROM flights.Flight_User where Flight_User.Flight_id = '"+deleteFlightTxt.getText().trim() + 
+						"' and Flight_User.User_id= '"+getUsernameId()+"'";
+				String sqlFlightCheck = "SELECT `Flight_id`, `User_id` FROM `flights`.`Flight_User` where User_id = '"+ getUsernameId() +
+						"' and Flight_id= '"+ deleteFlightTxt.getText().trim()+"'";
+				// create a statement
+				Statement myStat = myConn.createStatement();
+				// execute a query
+				ResultSet myRs;
+				myRs = myStat.executeQuery(sqlFlightCheck);
+
+				// Creates a variable for future checking
+				int count = 0;
+				while (myRs.next()) {
+					count = count + 1;
+					setUsernameId(myRs.getString("User_id"));
+					System.out.println(getUsernameId());
+				}
+				
+				if(count > 0) {
+					myStat.executeUpdate(sqlFlightDelete);
+					
+					
+				}
+				
+				else {
+					AlertBox.display("Error!", "Error! you have not  booked flight number: "+ deleteFlightTxt.getText().trim() +" yet. \n You cannot delete a flight you havent booked!" );
+				}
+				myStat.close();
+				myRs.close();
+				myConn.close();
+			}
+
+			catch (SQLException e1) {
+				System.out.println(e1.getMessage());
+				
+			}
+
+		});
+        
         
         
         TableColumn<Flight, Integer> column1 = new TableColumn<Flight, Integer>("Flight Number");
@@ -140,7 +282,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			String sqlUserCheck = "select  `number`, `airline`, `origin_city`, `destination_city`, `departure_time`, `arrival_time`, `departure_date`, `arrival_date` from\r\n" + 
 					"flights.flight inner Join flights.Flight_User\r\n" + 
 					"on Flight_id = flight.id\r\n" + 
-					"inner join flights.users on Flight_User.User_id = users.id where username = '"+ Login.user + "'";
+					"inner join flights.users on Flight_User.User_id = users.id where username = '"+ Login.getUser() + "'";
 			// create a statement
 			PreparedStatement myStat = myConn.prepareStatement(sqlUserCheck);
 			// execute a query
@@ -165,26 +307,23 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 						myRs.getDate("arrival_date"),
 						myRs.getTime("arrival_time")));
 				table.setItems(data);
+				
 			}
 			myStat.close();
 			myRs.close();
-;			} catch (Exception ex) {
+			} catch (Exception ex) {
 
 		}
 
-        anchor.getChildren().add(userId);
-        anchor.getChildren().add(searchFlights);
-        anchor.getChildren().add(table);
-        anchor.getChildren().add(myFlights);
-        anchor.getChildren().add(deleteFlights);
-        anchor.getChildren().add(logOut);
+        anchor.getChildren().addAll(deleteFlightLbl,userId,searchFlights,table,myFlights,deleteFlights, deleteFlightTxt,logOut, refresh  );
 		
 		
 		
-		Scene scene =new Scene(anchor, 1150, 500);
+		Scene scene =new Scene(anchor, 1250, 500);
 		
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.centerOnScreen();
 	}
 
 	@Override

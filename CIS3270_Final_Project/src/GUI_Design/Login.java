@@ -11,9 +11,25 @@ import javafx.scene.text.*;
 import javafx.stage.*;
 
 public class Login extends Application implements EventHandler<ActionEvent> {
-	public static String user = "";
-	public static String password = "";
+	private static String user = "";
+	private static String password = "";
 	
+	public static String getUser() {
+		return user;
+	}
+
+	public static void setUser(String user) {
+		Login.user = user;
+	}
+
+	public static String getPassword() {
+		return password;
+	}
+
+	public static void setPassword(String password) {
+		Login.password = password;
+	}
+
 	public static Scene scene;
 
 	public static void main(String[] args) {
@@ -50,6 +66,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		TextField userTxt = new TextField();
 		userTxt.setLayoutX(311.0);
 		userTxt.setLayoutY(133.0);
+		userTxt.setPromptText("Username");
 
 		Label passwordLabel = new Label("Password:");
 		passwordLabel.setLayoutX(193.0);
@@ -59,6 +76,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		PasswordField passwordTxt = new PasswordField();
 		passwordTxt.setLayoutX(311.0);
 		passwordTxt.setLayoutY(177.0);
+		passwordTxt.setPromptText("Password");
 		passwordTxt.setOnAction(e -> {// Exception handling for connecting to the database
 			try {
 				// get a connection to the database
@@ -72,15 +90,15 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 				// collects user name from the user name text field and assigns to a string
 				// called user
-				user = userTxt.getText().trim();
+				setUser(userTxt.getText().trim());
 
 				// Collects password from the password text field and assigns to a string called
 				// password
-				String password = passwordTxt.getText().trim();
+				 setPassword(passwordTxt.getText().trim());
 
 				// SQL query to check if user name and password is in database
-				String sqlUserCheck = "SELECT `username`, `id` FROM `flights`.`users` where username = '" + user
-						+ "' and password = '" + password + "'";
+				String sqlUserCheck = "SELECT `username`, `id` FROM `flights`.`users` where username = '" + getUser()
+						+ "' and password = '" + getPassword() + "'";
 				myRs = myStat.executeQuery(sqlUserCheck);
 
 				// Creates a variable for future checking
@@ -144,15 +162,15 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 				// collects user name from the user name text field and assigns to a string
 				// called user
-				user = userTxt.getText().trim();
+				setUser(userTxt.getText().trim()) ;
 
 				// Collects password from the password text field and assigns to a string called
 				// password
-				String password = passwordTxt.getText().trim();
+				setPassword(passwordTxt.getText().trim());
 
 				// SQL query to check if user name and password is in database
-				String sqlUserCheck = "SELECT `username` FROM `flights`.`users` where username = '" + user
-						+ "' and password = '" + password + "'";
+				String sqlUserCheck = "SELECT `username` FROM `flights`.`users` where username = '" + getUser()
+						+ "' and password = '" + getPassword() + "'";
 				myRs = myStat.executeQuery(sqlUserCheck);
 
 				// Creates a variable for future checking
@@ -241,6 +259,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.centerOnScreen();
 	}
 
 	@Override

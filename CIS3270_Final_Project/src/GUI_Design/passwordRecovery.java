@@ -120,6 +120,7 @@ public class passwordRecovery extends Application implements EventHandler<Action
 		grid.getChildren().addAll(passwordRecoverLabel, usernameLabel, username, recover, login);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.centerOnScreen();
 	}
 
 	@Override

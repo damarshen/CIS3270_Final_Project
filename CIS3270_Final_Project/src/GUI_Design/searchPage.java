@@ -22,6 +22,120 @@ import javafx.stage.*;
 public class searchPage extends Application implements EventHandler<ActionEvent> {
 	private ObservableList<ObservableList> data;
 	private String usernameId = "";
+	private Date depDate;
+	private Date arrDate;
+	private Time depTime;
+	private Time arrTime;
+	private Date newDepDate;
+	private Date newArrDate;
+	private Time newDepTime;
+	private Time newArrTime;
+	private Timestamp depTimestamp;
+	private Timestamp arrTimestamp;
+	private Timestamp newFlightDep;
+	private int conflictCount=0;
+	private int countHolder;
+	
+	
+	public Date getNewDepDate() {
+		return newDepDate;
+	}
+
+
+	public void setNewDepDate(Date newDepDate) {
+		this.newDepDate = newDepDate;
+	}
+
+
+	public Date getNewArrDate() {
+		return newArrDate;
+	}
+
+
+	public void setNewArrDate(Date newArrDate) {
+		this.newArrDate = newArrDate;
+	}
+
+
+	public Time getNewDepTime() {
+		return newDepTime;
+	}
+
+
+	public void setNewDepTime(Time newDepTime) {
+		this.newDepTime = newDepTime;
+	}
+
+	
+	public Time getNewArrTime() {
+		return newArrTime;
+	}
+
+	
+	public void setNewArrTime(Time newArrTime) {
+		this.newArrTime = newArrTime;
+	}
+
+	
+	public Date getDepDate() {
+		return depDate;
+	}
+
+	
+	public  void setDepDate(Date depDate) {
+		this.depDate = depDate;
+	}
+
+
+	public Date getArrDate() {
+		return arrDate;
+	}
+
+
+	public void setArrDate(Date arrDate) {
+		this.arrDate = arrDate;
+	}
+
+
+	public Time getDepTime() {
+		return depTime;
+	}
+
+
+	public void setDepTime(Time depTime) {
+		this.depTime = depTime;
+	}
+
+
+	public Time getArrTime() {
+		return arrTime;
+	}
+
+
+	public void setArrTime(Time arrTime) {
+		this.arrTime = arrTime;
+	}
+
+
+	public Timestamp getDepTimestamp() {
+		return depTimestamp;
+	}
+
+
+	public void setDepTimestamp(Timestamp depTimestamp) {
+		this.depTimestamp = depTimestamp;
+	}
+
+
+	public Timestamp getArrTimestamp() {
+		return arrTimestamp;
+	}
+
+
+	public void setArrTimestamp(Timestamp arrTimestamp) {
+		this.arrTimestamp = arrTimestamp;
+	}
+	
 
 	public String getUsernameId() {
 		return usernameId;
@@ -31,6 +145,25 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		this.usernameId = usernameId;
 	}
 
+	
+	public int getConflictCount() {
+		return conflictCount;
+	}
+
+
+	public void setConflictCount(int conflictCount) {
+		this.conflictCount = conflictCount;
+	}
+
+
+	public int getCountHolder() {
+		return countHolder;
+	}
+
+
+	public void setCountHolder(int countHolder) {
+		this.countHolder = countHolder;
+	}
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -39,8 +172,6 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 	public void start(Stage primaryStage) throws Exception {
 
 		primaryStage.setTitle("Search");
-		primaryStage.setResizable(true);
-		primaryStage.setMaximized(true);
 		AnchorPane anchor = new AnchorPane();
 		anchor.setPadding(new Insets(20, 20, 20, 20));
 		TableView<Flight> table = new TableView<>();
@@ -85,7 +216,7 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		userId.setContentDisplay(javafx.scene.control.ContentDisplay.CENTER);
 		userId.setLayoutX(1000.0);
 		userId.setLayoutY(10.0);
-		userId.setText("Logged in as: " + Login.user);
+		userId.setText("Logged in as: " + Login.getUser());
 		userId.setTextAlignment(javafx.scene.text.TextAlignment.RIGHT);
 		userId.setFont(new Font(18.0));
 
@@ -105,7 +236,7 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
 					"Tdgiheay12");
 
-			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.user + "'";
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + "'";
 			// create a statement
 			Statement myStat = myConn.createStatement();
 			// execute a query
@@ -140,7 +271,15 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 						"Tdgiheay12");
 
 				String sqlFlightBook = "INSERT INTO `flights`.`Flight_User`(`Flight_id`,`User_id`)VALUES("+ addFlight.getText().trim() + ", " + getUsernameId() + ")";
+				
 				String sqlFlightCheck= "SELECT `Flight_id`, `User_id` FROM `flights`.`Flight_User` where User_id = '"+ getUsernameId() + "' and Flight_id= '"+ addFlight.getText().trim()+"'";
+				
+				String sqlBookingCheck = "select  `number`,`departure_time`, `arrival_time`, `departure_date`, `arrival_date` from\r\n" + 
+						"flights.flight inner Join flights.Flight_User on Flight_id = flight.id \r\n" + 
+						"inner join flights.users on Flight_User.User_id = users.id where username = '" +Login.getUser()+"'";
+				
+				String bookingCheckValue = "SELECT `departure_date`, `departure_time` FROM `flights`.`flight` where number ='"+addFlight.getText().trim()+ "'";
+				
 				// create a statement
 				Statement myStat = myConn.createStatement();
 				// execute a query
@@ -154,8 +293,48 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 
 				}
 				
+				
+				myRs = myStat.executeQuery(bookingCheckValue);
+				while (myRs.next()) {
+					setNewDepDate(myRs.getDate("departure_date"));
+					setNewDepTime (myRs.getTime("departure_time"));
+					 setNewFlightDep(java.sql.Timestamp.valueOf(getNewDepDate().toString().concat(" "+ getNewDepTime().toString())));
+					 System.out.println(getNewFlightDep());
+				}
+				
+				
+				
 				if(count == 0) {
+					
+					myRs = myStat.executeQuery(sqlBookingCheck);
+					while (myRs.next()) {
+					
+						setDepDate(myRs.getDate("departure_date"));
+						setArrDate (myRs.getDate("arrival_date"));
+						setDepTime(myRs.getTime("departure_time"));
+						setArrTime(myRs.getTime("arrival_time"));
+						java.sql.Timestamp departure =  java.sql.Timestamp.valueOf(getDepDate().toString().concat(" "+getDepTime().toString()));
+						java.sql.Timestamp arrival =  java.sql.Timestamp.valueOf(getArrDate().toString().concat(" "+getArrTime().toString()));
+						
+						setConflictCount(conflictCheck(departure,arrival, getNewFlightDep()));
+						if (getConflictCount()==1) {
+							setCountHolder(1);
+						}
+						
+						System.out.println(getConflictCount());
+						
+					}
+					if (getCountHolder()==0) {
+					
+					
 					myStat.executeUpdate(sqlFlightBook);
+					}
+					
+					else {
+						AlertBox.display("Error", "This flight conflicts with other flights in your account");
+					}
+					
+					
 				}
 				
 				else {
@@ -264,7 +443,19 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		primaryStage.setResizable(false);
+		primaryStage.setMaximized(true);
 	}
+
+	public Timestamp getNewFlightDep() {
+		return newFlightDep;
+	}
+
+
+	public void setNewFlightDep(Timestamp newFlightDep) {
+		this.newFlightDep = newFlightDep;
+	}
+
 
 	@Override
 	public void handle(ActionEvent arg0) {
@@ -292,5 +483,22 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		return dbSearch;
 
 	}
+	
+	public int conflictCheck(Timestamp d, Timestamp a, Timestamp d1) {
+		
+		if (d1.after(d)&& d1.before(a)) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	
+	}
+
+
+	
+
+
+	
 
 }
