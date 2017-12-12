@@ -219,6 +219,15 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		register.setMnemonicParsing(false);
 		register.setPrefHeight(25.0);
 		register.setPrefWidth(149.0);
+		register.setOnAction(e ->{
+			Register registerPage = new Register();
+			try {
+				registerPage.start(primaryStage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
 		Button passwordRecover = new Button("Forgot Password");
 		passwordRecover.setLayoutX(236.0);

@@ -1,5 +1,12 @@
 package GUI_Design;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+
 import Objects.Flights.Flight;
 import javafx.application.*;
 import javafx.collections.*;
@@ -63,10 +70,6 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 		capacity.setLayoutX(200);
 		capacity.setLayoutY(330);
 		
-		Text seatsAvailable = new Text("Seats Available");
-		seatsAvailable.setLayoutX(200);
-		seatsAvailable.setLayoutY(365);
-		
 		
 		
 		TextField airlineTxtField = new TextField();
@@ -116,20 +119,69 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 		capacityTxtField.setLayoutX(300);
 		capacityTxtField.setLayoutY(310);
 		capacityTxtField.setPromptText("Capacity");
+
 		
-		TextField seatsAvailableTxtField = new TextField();
-		seatsAvailableTxtField.setLayoutX(300);
-		seatsAvailableTxtField.setLayoutY(345);
-		seatsAvailableTxtField.setPromptText("Seats Available");
+		Button create = new Button("Create Flight");
+		create.setLayoutX(500);
+		create.setLayoutY(400);
+		create.setOnAction(e ->{
+			java.sql.Timestamp departure =  java.sql.Timestamp.valueOf(departureDateTxtField.getText().concat(" "+departureTimeTxtField.getText()));
+			java.sql.Timestamp arrival =  java.sql.Timestamp.valueOf(arrivalDateTxtField.getText().concat(" "+arrivalTimeTxtField.getText()));
+			
+			if(schedulingCheck(departure, arrival)==0) {
+			
+			try {
+				
+				Connection myConn;
+				myConn = DriverManager.getConnection(
+						"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+						"Tdgiheay12");
+				String sqlFightCheck = "select * From `flights`.`flight` where number = '"+flightNumberTxtField.getText() +"'";
+
+				String sqlFlightCreate= "INSERT INTO `flights`.`flight`(`airline`,`number`,`origin_city`,`destination_city`,`departure_date`,"
+						+ "`departure_time`,`arrival_date`,`arrival_time`,`capacity`,`seats_available`) VALUES('" +airlineTxtField.getText()+"', '"
+						+flightNumberTxtField.getText()+"', '"+originCityTxtField.getText()+"', '"+destinationCityTxtField.getText()+"' , '"+
+						departureDateTxtField.getText()+"', '" + departureTimeTxtField.getText()+ "', '" + arrivalDateTxtField.getText()+ "', '"
+						+ arrivalTimeTxtField.getText()+ "', '" + capacityTxtField.getText()+ "', ' "+capacityTxtField.getText()+"')";
+
+				Statement myStat = myConn.createStatement();
+				// execute a query
+				;
+				ResultSet myRs;
+				myRs = myStat.executeQuery(sqlFightCheck);
+				int count = 0;
+				while (myRs.next()) {
+					count+=1;
+				}
+				if (count == 0) {
+					myStat.executeUpdate(sqlFlightCreate);
+
+				}
+				else {
+					AlertBox.display("Error", "Flight number "+ flightNumberTxtField.getText()+ " already exists." );
+				}
+				
+				
+			} catch (SQLException exc) {
+				System.out.println(exc.getMessage());
+				}
+			}
+			
+			else {
+				AlertBox.display("Error", "Error: departure cannot be before a arrival");
+			}
+		});
+		
 		
 		
 		
 		
 		anchor.getChildren().addAll(airline, flightNumber, originCity, destinationCity,departureDate, departureTime,
-									arrivalDate, arrivalTime,capacity,seatsAvailable, airlineTxtField,flightNumberTxtField,originCityTxtField,
+									arrivalDate, arrivalTime,capacity, airlineTxtField,flightNumberTxtField,originCityTxtField,
 									destinationCityTxtField,departureDateTxtField, departureTimeTxtField,arrivalDateTxtField,arrivalTimeTxtField, 
-									capacityTxtField,seatsAvailableTxtField);
-		Scene scene = new Scene(anchor, 1300, 700);
+									capacityTxtField, create);
+		
+		Scene scene = new Scene(anchor, 800,800);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);
@@ -142,5 +194,16 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 		// TODO Auto-generated method stub
 		
 	}
+	
+	public int schedulingCheck(Timestamp d, Timestamp a) {
+		
+		if (d.compareTo(a)>=0) {
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	
+}
 	
 }

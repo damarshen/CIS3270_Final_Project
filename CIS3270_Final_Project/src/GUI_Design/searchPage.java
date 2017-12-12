@@ -35,7 +35,9 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 	private Timestamp newFlightDep;
 	private int conflictCount=0;
 	private int countHolder;
-	
+	private int emptySeats;
+	private int takenSeats;
+	private int full;
 	
 	public Date getNewDepDate() {
 		return newDepDate;
@@ -160,6 +162,35 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		return countHolder;
 	}
 
+	public int getEmptySeats() {
+		return emptySeats;
+	}
+
+
+	public void setEmptySeats(int emptySeats) {
+		this.emptySeats = emptySeats;
+	}
+
+
+	public int getTakenSeats() {
+		return takenSeats;
+	}
+
+
+	public void setTakenSeats(int takenSeats) {
+		this.takenSeats = takenSeats;
+	}
+
+
+	public int getFull() {
+		return full;
+	}
+
+
+	public void setFull(int full) {
+		this.full = full;
+	}
+
 
 	public void setCountHolder(int countHolder) {
 		this.countHolder = countHolder;
@@ -228,7 +259,35 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		TextField addFlight = new TextField();
 		addFlight.setLayoutX(1200);
 		addFlight.setLayoutY(300);
+		
+		try {
+			Connection myConn;
+			myConn = DriverManager.getConnection(
+					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+					"Tdgiheay12");
 
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + "'";
+			// create a statement
+			Statement myStat = myConn.createStatement();
+			// execute a query
+			ResultSet myRs;
+			myRs = myStat.executeQuery(sqlUserCheck);
+
+			// Creates a variable for future checking
+			int count = 0;
+			while (myRs.next()) {
+				count = count + 1;
+				setUsernameId(myRs.getString("id"));
+				System.out.println(getUsernameId());
+
+			}
+
+		} catch (Exception exc) {
+
+		}
+
+		
+		
 		Label addFlightLbl = new Label("Select Flight Number to Add");
 		try {
 			Connection myConn;
@@ -494,6 +553,8 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		}
 	
 	}
+
+
 
 
 	

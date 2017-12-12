@@ -12,6 +12,22 @@ import javafx.stage.*;
 
 public class Register extends Application implements EventHandler<ActionEvent>{
 
+	
+	TextField tfName= new TextField();
+    TextField tlName = new TextField();
+    TextField tAddress = new TextField();
+    TextField tZip = new TextField();
+    TextField tState = new TextField();
+    TextField tUserName = new TextField();
+    TextField tEmail = new TextField();
+    TextField tSSN = new TextField();
+    TextField tSecutiryQ = new TextField();
+    TextField tSecutiryA = new TextField();
+    PasswordField	tPassword = new PasswordField();
+    PasswordField  tConfirm = new PasswordField();
+    Button button = new Button();
+    Button button0 = new Button();
+    Label Title = new Label();
 
 	/**
 	 * Launch the application.
@@ -20,188 +36,12 @@ public class Register extends Application implements EventHandler<ActionEvent>{
 		Application.launch(args);
 	}
 	
-	
-
-	/**
-	 * Create the application.
-	 */
-	public Register() {
-		initialize();
-	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
 
-
-
-		
-
-		addLabel("lFullName", "First/Last Name", 230, 70, 154, 20);
-		addLabel("lrequired", "*", 380, 70, 154, 20);
-		addLabel("lrequired", "*", 495, 70, 154, 20);
-
-		tfName = new JTextField();
-		tfName.setBounds(390, 70, 105, 25);
-		frame.getContentPane().add(tfName);
-		tfName.setColumns(10);
-
-		tlName = new JTextField();
-		tlName.setBounds(505, 70, 105, 25);
-		frame.getContentPane().add(tlName);
-		tlName.setColumns(10);
-
-		addLabel("Address", "Address", 230, 120, 154, 20);
-
-		tAddress = new JTextField();
-		tAddress.setBounds(390, 120, 220, 25);
-		frame.getContentPane().add(tAddress);
-		tAddress.setColumns(10);
-
-		addLabel("lAddress2", "City, State Zip", 230, 150, 154, 20);
-
-		tCity = new JTextField();
-		tCity.setBounds(390, 150, 100, 25);
-		frame.getContentPane().add(tCity);
-		tCity.setColumns(10);
-
-		tState = new JTextField();
-		tState.setBounds(500, 150, 50, 25);
-		frame.getContentPane().add(tState);
-		tState.setColumns(10);
-
-		tZip = new JTextField();
-		tZip.setBounds(560, 150, 50, 25);
-		frame.getContentPane().add(tZip);
-		tZip.setColumns(10);
-
-		addLabel("lUsername", "User Name", 230, 200, 154, 20);
-		addLabel("lrequired", "*", 380, 200, 154, 20);
-
-		tUserName = new JTextField();
-		tUserName.setBounds(390, 200, 220, 25);
-		frame.getContentPane().add(tUserName);
-		tUserName.setColumns(10);
-
-		addLabel("lPassword", "Password", 230, 230, 154, 20);
-		addLabel("lrequired", "*", 380, 230, 154, 20);
-
-		tPassword = new JPasswordField();
-		tPassword.setBounds(390, 230, 220, 25);
-		frame.getContentPane().add(tPassword);
-		tPassword.setColumns(10);
-
-		addLabel("lConfirm", "Confirm", 230, 260, 154, 20);
-		addLabel("lrequired", "*", 380, 260, 154, 20);
-
-		tConfirm = new JPasswordField();
-		tConfirm.setBounds(390, 260, 220, 25);
-		frame.getContentPane().add(tConfirm);
-		tConfirm.setColumns(10);
-
-		addLabel("lEmail", "Email", 230, 310, 154, 20);
-		addLabel("lrequired", "*", 380, 310, 154, 20);
-
-		tEmail = new JTextField();
-		tEmail.setBounds(390, 310, 220, 25);
-		frame.getContentPane().add(tEmail);
-		tEmail.setColumns(10);
-
-		addLabel("lSSN", "SSN", 230, 340, 154, 20);
-		addLabel("lrequired", "*", 380, 330, 154, 20);
-
-		tSSN = new JTextField();
-		tSSN.setBounds(390, 340, 220, 25);
-		frame.getContentPane().add(tSSN);
-		tSSN.setColumns(10);
-
-		addLabel("lSecQuestion", "Security Question", 230, 390, 154, 20);
-		addLabel("lrequired", "*", 380, 390, 154, 20);
-
-		tSecutiryQ = new JTextField();
-		tSecutiryQ.setBounds(390, 390, 220, 25);
-		frame.getContentPane().add(tSecutiryQ);
-		tSecutiryQ.setColumns(10);
-
-		addLabel("lSecAnswer", "Security Answer", 230, 420, 154, 20);
-		addLabel("lrequired", "*", 380, 420, 154, 20);
-
-		tSecutiryA = new JTextField();
-		tSecutiryA.setBounds(390, 420, 220, 25);
-		frame.getContentPane().add(tSecutiryA);
-		tSecutiryA.setColumns(10);
-
-		btnRegister = new JButton("Register");
-		btnRegister.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				SaveData();
-			}
-		});
-		btnRegister.setBounds(390, 460, 220, 28);
-		frame.getContentPane().add(btnRegister);
-
-		lError = new JLabel("");
-		lError.setFont(new Font("Calibri", Font.BOLD, 20));
-		lError.setBounds(350, 485, 520, 28);
-		frame.getContentPane().add(lError);
-
-		frame.setTitle("New User Registration");
-	}
-
-	private void addLabel(String labelName, String labelText, int x, int y, int w, int h) {
-		JLabel lLabel = new JLabel(labelText);
-		lLabel.setName(labelName);
-		lLabel.setFont(new Font("Calibri", Font.BOLD, 20));
-		lLabel.setBounds(x, y, w, h);
-		frame.getContentPane().add(lLabel);
-	}
-
-	@SuppressWarnings("deprecation")
-	private void SaveData() {
-		if (tfName.getText().isEmpty() || tlName.getText().isEmpty() || tUserName.getText().isEmpty()
-				|| tPassword.getText().isEmpty() || tEmail.getText().isEmpty() || tSSN.getText().isEmpty()
-				|| tSecutiryQ.getText().isEmpty() || tSecutiryA.getText().isEmpty()) {
-			lError.setText("Please fill out all the required field and submit.");
-			// lError.setStyle("-fx-font-size:15; -fx-text-fill: red;");
-		} else {
-			if (tPassword.getPassword().equals((tConfirm.getPassword()))) {
-				lError.setText("Password and Confirm password do not match.");
-			} else {
-				String sql = "INSERT INTO `flights`.`users`" + 
-						"(`firstName`,`lastName`,`address`,`zipcode`,`state`,`username`,`password`,`email`,"
-						+ "`ssn`,`security_question`,`security_answer`,`isAdmin`)VALUES " + 
-						"('"+ tfName.getText() +"', '"+tlName.getText()+"', '"+ tAddress.getText()+"', '" 
-						+tZip.getText()+"', '" +tState.getText()+"', '"+ tUserName.getText() + "', '" + tPassword.getText() +"', '"
-						+ tEmail.getText()+"', '" +tSSN.getText() + "', '" + tSecutiryQ.getText()+"', '" +tSecutiryA.getText()+ "', '0')";
-
-				try {
-					Connection myConn = DriverManager.getConnection(
-							"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
-							"Tdgiheay12");
-					// create a statement
-					Statement myStat = myConn.createStatement();
-					myStat.executeUpdate(sql);
-					
-					lError.setText("A new user inserted successfully.");
-					// lError.setStyle("-fx-font-size:15; -fx-text-fill: green;");
-
-					Thread.sleep(3000);
-
-					Login login = new Login();
-					Login.main(null);
-
-					Register.frame.hide();
-				} catch (SQLException | InterruptedException e) {
-					lError.setText(
-							"A new user insert failed. \nThe user name " + tUserName.getText() + " is not available.");
-					// lError.setStyle("-fx-font-size:15; -fx-text-fill: red;");
-					System.out.println(e.getMessage());
-				} 
-
-			}
-		}
-	}
+	
 
 	@Override
 	public void handle(ActionEvent arg0) {
@@ -212,23 +52,256 @@ public class Register extends Application implements EventHandler<ActionEvent>{
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		primaryStage.setTitle("Log In");
+		primaryStage.setTitle("Register");
 		primaryStage.setResizable(false);
 		AnchorPane anchor = new AnchorPane();
 		anchor.setPadding(new Insets(10, 10, 10, 10));
-		Label lTitle = new Label("Registration Form (* required field)");
-		lTitle.setBounds(10, 10, 434, 28);
-		lTitle.setVerticalAlignment(SwingConstants.BOTTOM);
-		lTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lTitle.setFont(new Font("Calibri", Font.BOLD, 23));
-		frame.getContentPane().add(lTitle);
-		
-		
-		anchor.getChildren().addAll();
-		scene = new Scene(anchor, 850, 600);
 
-		primaryStage.setScene(scene);
+
+	       
+	        
+	        
+	        
+	        
+	        
+	       
+	        
+	        
+	       
+	       
+	        
+	        
+
+	
+	        
+	        Label firstNameLbl = new Label();
+	        firstNameLbl.setLayoutX(170.0);
+	        firstNameLbl.setLayoutY(81.0);
+	        firstNameLbl.setText("First Name");
+	        firstNameLbl.setFont(new Font(20.0));
+
+	  
+	       
+	        Label lastNameLbl = new Label();
+	        lastNameLbl.setLayoutX(171.0);
+	        lastNameLbl.setLayoutY(114.0);
+	        lastNameLbl.setText("Last Name");
+	        lastNameLbl.setFont(new Font(20.0));
+	        
+	        Label addressLbl = new Label();
+	        addressLbl.setLayoutX(194.0);
+	        addressLbl.setLayoutY(149.0);
+	        addressLbl.setText("Address");
+	        addressLbl.setFont(new Font(20.0));
+	        
+	        Label zipLbl = new Label();
+	        zipLbl.setLayoutX(184.0);
+	        zipLbl.setLayoutY(184.0);
+	        zipLbl.setText("Zip Code");
+	        zipLbl.setFont(new Font(20.0));
+	        
+	        Label stateLbl = new Label();
+	        stateLbl.setLayoutX(218.0);
+	        stateLbl.setLayoutY(221.0);
+	        stateLbl.setText("State");
+	        stateLbl.setFont(new Font(20.0));
+	        
+	        Label userLbl = new Label();
+	        userLbl.setLayoutX(174.0);
+	        userLbl.setLayoutY(256.0);
+	        userLbl.setText("Username");
+	        userLbl.setFont(new Font(20.0));
+	        
+	        Label  passLbl = new Label();
+	        passLbl.setLayoutX(177.0);
+	        passLbl.setLayoutY(287.0);
+	        passLbl.setText("Password");
+	        passLbl.setFont(new Font(20.0));
+	        
+	        Label pconfirmPassLbl = new Label();
+	        pconfirmPassLbl.setLayoutX(103.0);
+	        pconfirmPassLbl.setLayoutY(329.0);
+	        pconfirmPassLbl.setText("Confirm Password");
+	        pconfirmPassLbl.setFont(new Font(20.0));
+
+	        Label emailLbl = new Label();
+	        emailLbl.setLayoutX(217.0);
+	        emailLbl.setLayoutY(362.0);
+	        emailLbl.setText("Email");
+	        emailLbl.setFont(new Font(20.0));
+	        
+	        Label ssnLbl = new Label();
+	        ssnLbl.setLayoutX(222.0);
+	        ssnLbl.setLayoutY(392.0);
+	        ssnLbl.setText("SSN");
+	        ssnLbl.setFont(new Font(20.0));
+	        
+	        Label secQLbl = new Label();
+	        secQLbl.setLayoutX(105.0);
+	        secQLbl.setLayoutY(434.0);
+	        secQLbl.setText("Security Question");
+	        secQLbl.setFont(new Font(20.0));
+	        
+	        Label secALbl = new Label();
+	        secALbl.setLayoutX(124.0);
+	        secALbl.setLayoutY(472.0);
+	        secALbl.setText("Security Answer");
+	        secALbl.setFont(new Font(20.0));
+
+	        tfName.setLayoutX(274.0);
+	        tfName.setLayoutY(83.0);
+	        tfName.setPromptText("First Name");
+
+	        tlName.setLayoutX(274.0);
+	        tlName.setLayoutY(116.0);
+	        tlName.setPromptText("Last Name");
+
+	        tAddress.setLayoutX(274.0);
+	        tAddress.setLayoutY(151.0);
+	        tAddress.setPromptText("Address");
+
+	        tZip.setLayoutX(274.0);
+	        tZip.setLayoutY(186.0);
+	        tZip.setPromptText("#####");
+
+	        tState.setLayoutX(274.0);
+	        tState.setLayoutY(223.0);
+	        tState.setPromptText("State");
+
+	        tUserName.setLayoutX(274.0);
+	        tUserName.setLayoutY(258.0);
+	        tUserName.setPromptText("Username");
+
+	        tEmail.setLayoutX(274.0);
+	        tEmail.setLayoutY(364.0);
+	        tEmail.setPromptText("Example@example.com");
+
+	        tSSN.setLayoutX(274.0);
+	        tSSN.setLayoutY(402.0);
+	        tSSN.setPromptText("###-##-####");
+
+	        tSecutiryQ.setLayoutX(274.0);
+	        tSecutiryQ.setLayoutY(436.0);
+	        tSecutiryQ.setPromptText("Security Question");
+
+	        tSecutiryA.setLayoutX(274.0);
+	        tSecutiryA.setLayoutY(474.0);
+	        tSecutiryA.setPromptText("Security Answer");
+
+	        tPassword.setLayoutX(274.0);
+	        tPassword.setLayoutY(290.0);
+	        tPassword.setPromptText("Password");
+
+	        tConfirm.setLayoutX(274.0);
+	        tConfirm.setLayoutY(329.0);
+	        tConfirm.setPromptText("Confirm PAssword");
+
+	        button.setLayoutX(284.0);
+	        button.setLayoutY(534.0);
+	        button.setMnemonicParsing(false);
+	        button.setPrefHeight(25.0);
+	        button.setPrefWidth(105.0);
+	        button.setText("Register");
+	        button.setOnAction(e ->{
+	        	if (tfName.getText().isEmpty() || tlName.getText().isEmpty() || tUserName.getText().isEmpty()
+	    				|| tPassword.getText().isEmpty() || tEmail.getText().isEmpty() || tSSN.getText().isEmpty()
+	    				|| tSecutiryQ.getText().isEmpty() || tSecutiryA.getText().isEmpty()) {
+	    			AlertBox.display("Error!","Please fill out all the required field and submit.");
+	    			// lError.setStyle("-fx-font-size:15; -fx-text-fill: red;");
+	    		} else {
+	    			if (tPassword.getText().equals((tConfirm.getText()))== false) {
+	    				AlertBox.display( "Error","Password and Confirm password do not match.");
+	    			} else {
+	    				String sql = "INSERT INTO `flights`.`users`" + 
+	    						"(`firstName`,`lastName`,`address`,`zipcode`,`state`,`username`,`password`,`email`,"
+	    						+ "`ssn`,`security_question`,`security_answer`,`isAdmin`)VALUES " + 
+	    						"('"+ tfName.getText() +"', '"+tlName.getText()+"', '"+ tAddress.getText()+"', '" 
+	    						+tZip.getText()+"', '" +tState.getText()+"', '"+ tUserName.getText() + "', '" + tPassword.getText() +"', '"
+	    						+ tEmail.getText()+"', '" +tSSN.getText() + "', '" + tSecutiryQ.getText()+"', '" +tSecutiryA.getText()+ "', '0')";
+
+	    				try {
+	    					Connection myConn = DriverManager.getConnection(
+	    							"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+	    							"Tdgiheay12");
+	    					// create a statement
+	    					Statement myStat = myConn.createStatement();
+	    					myStat.executeUpdate(sql);
+	    					
+	    					AlertBox.display("Sucess","A new user inserted successfully.");
+	    					// lError.setStyle("-fx-font-size:15; -fx-text-fill: green;");
+
+	    					Thread.sleep(3000);
+
+	    					Login loginPage = new Login();
+	    					try {
+	    						loginPage.start(primaryStage);
+	    					} catch (Exception e1) {
+	    						// TODO Auto-generated catch block
+	    						e1.printStackTrace();
+	    					}
+	    				} catch (SQLException | InterruptedException e1) {
+	    					AlertBox.display(
+	    							"Error","A new user insert failed. \nThe user name " + tUserName.getText() + " is not available.");
+	    					// lError.setStyle("-fx-font-size:15; -fx-text-fill: red;");
+	    					System.out.println(e1.getMessage());
+	    				} 
+
+	    			}
+	    		}
+	        });
+
+	        button0.setLayoutX(154.0);
+	        button0.setLayoutY(534.0);
+	        button0.setMnemonicParsing(false);
+	        button0.setText("Return To Log In");
+	        button0.setOnAction(e ->{
+	        	Login loginPage = new Login();
+				try {
+					loginPage.start(primaryStage);
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+	        	
+	        });
+
+	        Title.setLayoutX(204.0);
+	        Title.setLayoutY(14.0);
+	        Title.setText("Register User");
+	        Title.setFont(new Font(24.0));
+
+	        anchor.getChildren().add(firstNameLbl);
+	        anchor.getChildren().add(lastNameLbl);
+	        anchor.getChildren().add(addressLbl);
+	        anchor.getChildren().add(zipLbl);
+	        anchor.getChildren().add(stateLbl);
+	        anchor.getChildren().add(userLbl);
+	        anchor.getChildren().add(passLbl);
+	        anchor.getChildren().add(pconfirmPassLbl);
+	        anchor.getChildren().add(emailLbl);
+	        anchor.getChildren().add(ssnLbl);
+	        anchor.getChildren().add(secQLbl);
+	        anchor.getChildren().add(secALbl);
+	        anchor.getChildren().add(tfName);
+	        anchor.getChildren().add(tlName);
+	        anchor.getChildren().add(tAddress);
+	        anchor.getChildren().add(tZip);
+	        anchor.getChildren().add(tState);
+	        anchor.getChildren().add(tUserName);
+	        anchor.getChildren().add(tEmail);
+	        anchor.getChildren().add(tSSN);
+	        anchor.getChildren().add(tSecutiryQ);
+	        anchor.getChildren().add(tSecutiryA);
+	        anchor.getChildren().add(tPassword);
+	        anchor.getChildren().add(tConfirm);
+	        anchor.getChildren().add(button);
+	        anchor.getChildren().add(button0);
+	        anchor.getChildren().add(Title);
+
+	        Scene scene = new Scene(anchor, 613, 612);
+	        primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.centerOnScreen();
 	}
+
 }
