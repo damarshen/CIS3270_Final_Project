@@ -248,34 +248,11 @@ public class Register extends Application implements EventHandler<ActionEvent> {
 		Title.setText("Register User");
 		Title.setFont(new Font(24.0));
 
-		anchor.getChildren().add(firstNameLbl);
-		anchor.getChildren().add(lastNameLbl);
-		anchor.getChildren().add(addressLbl);
-		anchor.getChildren().add(zipLbl);
-		anchor.getChildren().add(stateLbl);
-		anchor.getChildren().add(userLbl);
-		anchor.getChildren().add(passLbl);
-		anchor.getChildren().add(pconfirmPassLbl);
-		anchor.getChildren().add(emailLbl);
-		anchor.getChildren().add(ssnLbl);
-		anchor.getChildren().add(secQLbl);
-		anchor.getChildren().add(secALbl);
-		anchor.getChildren().add(tfName);
-		anchor.getChildren().add(tlName);
-		anchor.getChildren().add(tAddress);
-		anchor.getChildren().add(tZip);
-		anchor.getChildren().add(tState);
-		anchor.getChildren().add(tUserName);
-		anchor.getChildren().add(tEmail);
-		anchor.getChildren().add(tSSN);
-		anchor.getChildren().add(tSecutiryQ);
-		anchor.getChildren().add(tSecutiryA);
-		anchor.getChildren().add(tPassword);
-		anchor.getChildren().add(tConfirm);
-		anchor.getChildren().add(button);
-		anchor.getChildren().add(button0);
-		anchor.getChildren().add(Title);
-
+		anchor.getChildren().addAll(firstNameLbl,lastNameLbl,addressLbl,zipLbl, stateLbl,userLbl,passLbl,
+				pconfirmPassLbl, emailLbl,ssnLbl,secQLbl,secALbl,tfName, tlName, tAddress, tZip, tState,tUserName,
+				tEmail, tSSN, tSecutiryQ, tSecutiryA, tPassword, tConfirm, button, button0, Title);
+		
+		
 		Scene scene = new Scene(anchor, 613, 612);
 		primaryStage.setScene(scene);
 		primaryStage.show();

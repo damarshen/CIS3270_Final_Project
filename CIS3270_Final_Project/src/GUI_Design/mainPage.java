@@ -97,6 +97,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			searchPage search = new searchPage();
 			try {
 				search.start(primaryStage);
+				
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -164,6 +165,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			Login loginPage = new Login();
 			try {
 				loginPage.start(primaryStage);
+				
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
@@ -322,10 +324,30 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 		Button adminTool = new Button("Admin Add flight");
 		adminTool.setLayoutX(1100);
 		adminTool.setLayoutY(290);
+		adminTool.setOnAction(e ->{
+			FlightRegistration flight =new FlightRegistration();
+			try {
+				flight.start(primaryStage);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
 		Button adminTool1 = new Button("Admin Flight Edit/Delete");
 		adminTool1.setLayoutX(1100);
 		adminTool1.setLayoutY(330);
+		adminTool1.setOnAction(e -> {
+			flightUpdate update = new flightUpdate();
+			try {
+				update.start(primaryStage);
+				
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
 		if (isAdmin() == true) {
 			anchor.getChildren().add(adminTool);

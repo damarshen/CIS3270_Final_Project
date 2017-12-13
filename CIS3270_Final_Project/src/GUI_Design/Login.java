@@ -117,6 +117,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 				if (count == 1) {
 					mainPage MainPage = new mainPage();
 					MainPage.start(primaryStage);
+					
 
 				}
 
@@ -192,6 +193,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 				if (count == 1) {
 					mainPage MainPage = new mainPage();
 					MainPage.start(primaryStage);
+					
 
 				}
 
@@ -240,6 +242,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 			try {
 
 				recoverPage.start(primaryStage);
+				
 			}
 
 			catch (Exception e1) {

@@ -249,5 +249,15 @@ public class flightUpdate extends Application implements EventHandler<ActionEven
 		return dbquery;
 
 	}
+	
+	public int schedulingCheck(Timestamp d, Timestamp a) {
+
+		if (d.compareTo(a) >= 0) {
+			return 1;
+		} else {
+			return 0;
+		}
+
+	}
 
 }

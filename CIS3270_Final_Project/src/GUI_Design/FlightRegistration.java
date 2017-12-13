@@ -147,9 +147,9 @@ public class FlightRegistration extends Application implements EventHandler<Acti
 					String sqlFightCheck = "select * From `flights`.`flight` where number = '"
 							+ flightNumberTxtField.getText() + "'";
 
-					String sqlFlightCreate = "INSERT INTO `flights`.`flight`(`airline`,`number`,`origin_city`,`destination_city`,`departure_date`,"
+					String sqlFlightCreate = "INSERT INTO `flights`.`flight`(`id`,`airline`,`number`,`origin_city`,`destination_city`,`departure_date`,"
 							+ "`departure_time`,`arrival_date`,`arrival_time`,`capacity`,`seats_available`) VALUES('"
-							+ airlineTxtField.getText() + "', '" + flightNumberTxtField.getText() + "', '"
+							+ flightNumberTxtField.getText() + "', '"+ airlineTxtField.getText() + "', '" + flightNumberTxtField.getText() + "', '"
 							+ originCityTxtField.getText() + "', '" + destinationCityTxtField.getText() + "' , '"
 							+ departureDateTxtField.getText() + "', '" + departureTimeTxtField.getText() + "', '"
 							+ arrivalDateTxtField.getText() + "', '" + arrivalTimeTxtField.getText() + "', '"
@@ -166,6 +166,7 @@ public class FlightRegistration extends Application implements EventHandler<Acti
 					}
 					if (count == 0) {
 						myStat.executeUpdate(sqlFlightCreate);
+						AlertBox.display("Success", "FLight Successfully Added!");
 
 					} else {
 						AlertBox.display("Error",
