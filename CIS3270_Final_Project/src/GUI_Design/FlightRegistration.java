@@ -30,7 +30,7 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 	}
 	
 	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("Search");
+		primaryStage.setTitle("Add Flight");
 		AnchorPane anchor = new AnchorPane();
 		anchor.setPadding(new Insets(20, 20, 20, 20));
 		
@@ -120,9 +120,21 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 		capacityTxtField.setLayoutY(310);
 		capacityTxtField.setPromptText("Capacity");
 
+		Button returnHome= new Button("Return to main Page");
+		returnHome.setLayoutX(250);
+		returnHome.setLayoutY(450);
+		returnHome.setOnAction(e -> {
+			mainPage home = new mainPage();
+			try {
+				home.start(primaryStage);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		Button create = new Button("Create Flight");
-		create.setLayoutX(500);
+		create.setLayoutX(250);
 		create.setLayoutY(400);
 		create.setOnAction(e ->{
 			java.sql.Timestamp departure =  java.sql.Timestamp.valueOf(departureDateTxtField.getText().concat(" "+departureTimeTxtField.getText()));
@@ -179,9 +191,9 @@ public  class FlightRegistration  extends Application implements EventHandler<Ac
 		anchor.getChildren().addAll(airline, flightNumber, originCity, destinationCity,departureDate, departureTime,
 									arrivalDate, arrivalTime,capacity, airlineTxtField,flightNumberTxtField,originCityTxtField,
 									destinationCityTxtField,departureDateTxtField, departureTimeTxtField,arrivalDateTxtField,arrivalTimeTxtField, 
-									capacityTxtField, create);
+									capacityTxtField, create, returnHome);
 		
-		Scene scene = new Scene(anchor, 800,800);
+		Scene scene = new Scene(anchor, 550,550);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.setResizable(false);

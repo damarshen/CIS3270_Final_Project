@@ -19,6 +19,8 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 
 	private ObservableList<ObservableList> data;
 	private String usernameId = "";
+	
+	private boolean isAdmin =false;
 
 	public String getUsernameId() {
 		return usernameId;
@@ -50,6 +52,35 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         Button logOut = new Button();
         TextField deleteFlightTxt = new TextField();
         Button refresh = new Button("Refresh");
+        
+        try {
+			Connection myConn;
+			myConn = DriverManager.getConnection(
+					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
+					"Tdgiheay12");
+
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + " and isAdmin = '1'";
+			// create a statement
+			Statement myStat = myConn.createStatement();
+			// execute a query
+			ResultSet myRs;
+			myRs = myStat.executeQuery(sqlUserCheck);
+
+			// Creates a variable for future checking
+			int count = 0;
+			while (myRs.next()) {
+				count = count + 1;
+				
+
+			}
+			
+			if (count>0){
+				setAdmin(true);
+			}
+
+		} catch (Exception exc) {
+
+		}
 
       
 		userId.setAlignment(javafx.geometry.Pos.CENTER);
@@ -75,6 +106,9 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         	
         });
 
+        	Button adminTool = new Button();
+        	adminTool.setLayoutX(30);
+        	adminTool.setLayoutY(60);
         table.setLayoutX(10.0);
         table.setLayoutY(57.0);
         table.setPrefHeight(329.0);
@@ -314,6 +348,10 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			} catch (Exception ex) {
 
 		}
+		
+		if (isAdmin()==true) {
+			anchor.getChildren().add(adminTool);
+		}
 
         anchor.getChildren().addAll(deleteFlightLbl,userId,searchFlights,table,myFlights,deleteFlights, deleteFlightTxt,logOut, refresh  );
 		
@@ -330,6 +368,14 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 	public void handle(ActionEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
 	}
 
 	

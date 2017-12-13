@@ -192,9 +192,11 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 	}
 
 
-	public void setCountHolder(int countHolder) {
+	
+public void setCountHolder(int countHolder) {
 		this.countHolder = countHolder;
 	}
+
 	public static void main(String[] args) {
 		launch(args);
 	}
