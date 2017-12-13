@@ -59,7 +59,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
 					"Tdgiheay12");
 
-			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + " and isAdmin = '1'";
+			String sqlUserCheck = "SELECT * FROM `flights`.`users` where username = '" + Login.getUser() + "' and isAdmin = '1'";
 			// create a statement
 			Statement myStat = myConn.createStatement();
 			// execute a query
@@ -106,9 +106,7 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
         	
         });
 
-        	Button adminTool = new Button();
-        	adminTool.setLayoutX(30);
-        	adminTool.setLayoutY(60);
+        	
         table.setLayoutX(10.0);
         table.setLayoutY(57.0);
         table.setPrefHeight(329.0);
@@ -342,15 +340,25 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 						myRs.getTime("arrival_time")));
 				table.setItems(data);
 				
-			}
+			
 			myStat.close();
 			myRs.close();
-			} catch (Exception ex) {
+			} 
+		}
+			catch (Exception ex) {
 
 		}
-		
+		Button adminTool = new Button("Admin Add flight");
+    	adminTool.setLayoutX(1100);
+    	adminTool.setLayoutY(290);
+    	
+    	Button adminTool1 = new Button("Admin Flight Edit/Delete");
+    	adminTool1.setLayoutX(1100);
+    	adminTool1.setLayoutY(330);
+    	
 		if (isAdmin()==true) {
 			anchor.getChildren().add(adminTool);
+			anchor.getChildren().add(adminTool1);
 		}
 
         anchor.getChildren().addAll(deleteFlightLbl,userId,searchFlights,table,myFlights,deleteFlights, deleteFlightTxt,logOut, refresh  );
