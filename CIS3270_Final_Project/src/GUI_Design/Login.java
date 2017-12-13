@@ -269,7 +269,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 				BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
 				BackgroundSize.DEFAULT);
 		anchor.setBackground(new Background(myBI));
-		scene = new Scene(anchor, 550, 350);
+		scene = new Scene(anchor, 550, 370);
 		;
 		primaryStage.setScene(scene);
 		primaryStage.show();

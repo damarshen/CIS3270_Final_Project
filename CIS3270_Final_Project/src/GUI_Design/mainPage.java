@@ -137,11 +137,8 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 				table.getItems().clear();
 
 				// Creates a variable for future checking
-				int count = 0;
 
 				while (myRs.next()) {
-
-					count += 1;
 
 					data.add(new Flight(myRs.getInt("number"), myRs.getString("airline"), myRs.getString("origin_city"),
 							myRs.getString("destination_city"), myRs.getDate("departure_date"),
@@ -294,7 +291,6 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 		table.getColumns().addAll(column1, column2, column3, column4, column5, column6, column7, column8);
 
 		try {
-
 			Connection myConn = DriverManager.getConnection(
 					"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
 					"Tdgiheay12");
@@ -310,20 +306,16 @@ public class mainPage extends Application implements EventHandler<ActionEvent> {
 			table.getItems().clear();
 
 			// Creates a variable for future checking
-			int count = 0;
 
 			while (myRs.next()) {
-
-				count += 1;
 
 				data.add(new Flight(myRs.getInt("number"), myRs.getString("airline"), myRs.getString("origin_city"),
 						myRs.getString("destination_city"), myRs.getDate("departure_date"),
 						myRs.getTime("departure_time"), myRs.getDate("arrival_date"), myRs.getTime("arrival_time")));
 				table.setItems(data);
-
-				myStat.close();
-				myRs.close();
 			}
+			myStat.close();
+			myRs.close();
 		} catch (Exception ex) {
 
 		}
