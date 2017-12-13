@@ -33,111 +33,91 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 	private Timestamp depTimestamp;
 	private Timestamp arrTimestamp;
 	private Timestamp newFlightDep;
-	private int conflictCount=0;
+	private int conflictCount = 0;
 	private int countHolder;
 	private int emptySeats;
 	private int takenSeats;
 	private int full;
-	
+
 	public Date getNewDepDate() {
 		return newDepDate;
 	}
-
 
 	public void setNewDepDate(Date newDepDate) {
 		this.newDepDate = newDepDate;
 	}
 
-
 	public Date getNewArrDate() {
 		return newArrDate;
 	}
-
 
 	public void setNewArrDate(Date newArrDate) {
 		this.newArrDate = newArrDate;
 	}
 
-
 	public Time getNewDepTime() {
 		return newDepTime;
 	}
-
 
 	public void setNewDepTime(Time newDepTime) {
 		this.newDepTime = newDepTime;
 	}
 
-	
 	public Time getNewArrTime() {
 		return newArrTime;
 	}
 
-	
 	public void setNewArrTime(Time newArrTime) {
 		this.newArrTime = newArrTime;
 	}
 
-	
 	public Date getDepDate() {
 		return depDate;
 	}
 
-	
-	public  void setDepDate(Date depDate) {
+	public void setDepDate(Date depDate) {
 		this.depDate = depDate;
 	}
-
 
 	public Date getArrDate() {
 		return arrDate;
 	}
 
-
 	public void setArrDate(Date arrDate) {
 		this.arrDate = arrDate;
 	}
-
 
 	public Time getDepTime() {
 		return depTime;
 	}
 
-
 	public void setDepTime(Time depTime) {
 		this.depTime = depTime;
 	}
-
 
 	public Time getArrTime() {
 		return arrTime;
 	}
 
-
 	public void setArrTime(Time arrTime) {
 		this.arrTime = arrTime;
 	}
-
 
 	public Timestamp getDepTimestamp() {
 		return depTimestamp;
 	}
 
-
 	public void setDepTimestamp(Timestamp depTimestamp) {
 		this.depTimestamp = depTimestamp;
 	}
-
 
 	public Timestamp getArrTimestamp() {
 		return arrTimestamp;
 	}
 
-
 	public void setArrTimestamp(Timestamp arrTimestamp) {
 		this.arrTimestamp = arrTimestamp;
 	}
-	
 
 	public String getUsernameId() {
 		return usernameId;
@@ -147,16 +127,13 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		this.usernameId = usernameId;
 	}
 
-	
 	public int getConflictCount() {
 		return conflictCount;
 	}
 
-
 	public void setConflictCount(int conflictCount) {
 		this.conflictCount = conflictCount;
 	}
-
 
 	public int getCountHolder() {
 		return countHolder;
@@ -166,34 +143,27 @@ public class searchPage extends Application implements EventHandler<ActionEvent>
 		return emptySeats;
 	}
 
-
 	public void setEmptySeats(int emptySeats) {
 		this.emptySeats = emptySeats;
 	}
-
 
 	public int getTakenSeats() {
 		return takenSeats;
 	}
 
-
 	public void setTakenSeats(int takenSeats) {
 		this.takenSeats = takenSeats;
 	}
-
 
 	public int getFull() {
 		return full;
 	}
 
-
 	public void setFull(int full) {
 		this.full = full;
 	}
 
-
-	
-public void setCountHolder(int countHolder) {
+	public void setCountHolder(int countHolder) {
 		this.countHolder = countHolder;
 	}
 
@@ -261,7 +231,7 @@ public void setCountHolder(int countHolder) {
 		TextField addFlight = new TextField();
 		addFlight.setLayoutX(1200);
 		addFlight.setLayoutY(300);
-		
+
 		try {
 			Connection myConn;
 			myConn = DriverManager.getConnection(
@@ -288,8 +258,6 @@ public void setCountHolder(int countHolder) {
 
 		}
 
-		
-		
 		Label addFlightLbl = new Label("Select Flight Number to Add");
 		try {
 			Connection myConn;
@@ -331,16 +299,20 @@ public void setCountHolder(int countHolder) {
 						"jdbc:mysql://35.193.248.221:3306/?verifyServerCertificate=false&useSSL=true", "root",
 						"Tdgiheay12");
 
-				String sqlFlightBook = "INSERT INTO `flights`.`Flight_User`(`Flight_id`,`User_id`)VALUES("+ addFlight.getText().trim() + ", " + getUsernameId() + ")";
-				
-				String sqlFlightCheck= "SELECT `Flight_id`, `User_id` FROM `flights`.`Flight_User` where User_id = '"+ getUsernameId() + "' and Flight_id= '"+ addFlight.getText().trim()+"'";
-				
-				String sqlBookingCheck = "select  `number`,`departure_time`, `arrival_time`, `departure_date`, `arrival_date` from\r\n" + 
-						"flights.flight inner Join flights.Flight_User on Flight_id = flight.id \r\n" + 
-						"inner join flights.users on Flight_User.User_id = users.id where username = '" +Login.getUser()+"'";
-				
-				String bookingCheckValue = "SELECT `departure_date`, `departure_time` FROM `flights`.`flight` where number ='"+addFlight.getText().trim()+ "'";
-				
+				String sqlFlightBook = "INSERT INTO `flights`.`Flight_User`(`Flight_id`,`User_id`)VALUES("
+						+ addFlight.getText().trim() + ", " + getUsernameId() + ")";
+
+				String sqlFlightCheck = "SELECT `Flight_id`, `User_id` FROM `flights`.`Flight_User` where User_id = '"
+						+ getUsernameId() + "' and Flight_id= '" + addFlight.getText().trim() + "'";
+
+				String sqlBookingCheck = "select  `number`,`departure_time`, `arrival_time`, `departure_date`, `arrival_date` from\r\n"
+						+ "flights.flight inner Join flights.Flight_User on Flight_id = flight.id \r\n"
+						+ "inner join flights.users on Flight_User.User_id = users.id where username = '"
+						+ Login.getUser() + "'";
+
+				String bookingCheckValue = "SELECT `departure_date`, `departure_time` FROM `flights`.`flight` where number ='"
+						+ addFlight.getText().trim() + "'";
+
 				// create a statement
 				Statement myStat = myConn.createStatement();
 				// execute a query
@@ -353,53 +325,52 @@ public void setCountHolder(int countHolder) {
 					count = count + 1;
 
 				}
-				
-				
+
 				myRs = myStat.executeQuery(bookingCheckValue);
 				while (myRs.next()) {
 					setNewDepDate(myRs.getDate("departure_date"));
-					setNewDepTime (myRs.getTime("departure_time"));
-					 setNewFlightDep(java.sql.Timestamp.valueOf(getNewDepDate().toString().concat(" "+ getNewDepTime().toString())));
-					 System.out.println(getNewFlightDep());
-				}
-				
-				
-				
-				if(count == 0) {
+					setNewDepTime(myRs.getTime("departure_time"));
+					setNewFlightDep(java.sql.Timestamp
+							.valueOf(getNewDepDate().toString().concat(" " + getNewDepTime().toString())));
 					
+				}
+
+				if (count == 0) {
+
 					myRs = myStat.executeQuery(sqlBookingCheck);
 					while (myRs.next()) {
-					
+
 						setDepDate(myRs.getDate("departure_date"));
-						setArrDate (myRs.getDate("arrival_date"));
+						setArrDate(myRs.getDate("arrival_date"));
 						setDepTime(myRs.getTime("departure_time"));
 						setArrTime(myRs.getTime("arrival_time"));
-						java.sql.Timestamp departure =  java.sql.Timestamp.valueOf(getDepDate().toString().concat(" "+getDepTime().toString()));
-						java.sql.Timestamp arrival =  java.sql.Timestamp.valueOf(getArrDate().toString().concat(" "+getArrTime().toString()));
-						
-						setConflictCount(conflictCheck(departure,arrival, getNewFlightDep()));
-						if (getConflictCount()==1) {
+						java.sql.Timestamp departure = java.sql.Timestamp
+								.valueOf(getDepDate().toString().concat(" " + getDepTime().toString()));
+						java.sql.Timestamp arrival = java.sql.Timestamp
+								.valueOf(getArrDate().toString().concat(" " + getArrTime().toString()));
+
+						setConflictCount(conflictCheck(departure, arrival, getNewFlightDep()));
+						if (getConflictCount() == 1) {
 							setCountHolder(1);
 						}
-						
+
 						System.out.println(getConflictCount());
-						
+
 					}
-					if (getCountHolder()==0) {
-					
-					
-					myStat.executeUpdate(sqlFlightBook);
+					if (getCountHolder() == 0) {
+
+						myStat.executeUpdate(sqlFlightBook);
 					}
-					
+
 					else {
 						AlertBox.display("Error", "This flight conflicts with other flights in your account");
 					}
-					
-					
+
 				}
-				
+
 				else {
-					AlertBox.display("Error!", "Error! you have alredy booked flight number: "+ addFlight.getText().trim() +". \n You cannot Book the same flight tiwce!" );
+					AlertBox.display("Error!", "Error! you have alredy booked flight number: "
+							+ addFlight.getText().trim() + ". \n You cannot Book the same flight tiwce!");
 				}
 				myStat.close();
 				myRs.close();
@@ -408,12 +379,10 @@ public void setCountHolder(int countHolder) {
 
 			catch (SQLException e1) {
 				System.out.println(e1.getMessage());
-				
+
 			}
 
 		});
-		
-		
 
 		TableColumn<Flight, Integer> column1 = new TableColumn<Flight, Integer>("Flight Number");
 		column1.setCellValueFactory(new PropertyValueFactory<>("flightNumber"));
@@ -434,11 +403,11 @@ public void setCountHolder(int countHolder) {
 		TableColumn<Flight, Date> column5 = new TableColumn<Flight, Date>("Departure Date");
 		column5.setCellValueFactory(new PropertyValueFactory<>("departureDate"));
 		column5.setMinWidth(128.88);
-		
+
 		TableColumn<Flight, Time> column6 = new TableColumn<Flight, Time>("Departure Time");
 		column6.setCellValueFactory(new PropertyValueFactory<>("departureTime"));
 		column6.setMinWidth(128.88);
-		
+
 		TableColumn<Flight, Date> column7 = new TableColumn<Flight, Date>("Arrival date");
 		column7.setCellValueFactory(new PropertyValueFactory<>("arrivalTime"));
 		column7.setMinWidth(128.88);
@@ -474,24 +443,23 @@ public void setCountHolder(int countHolder) {
 				table.getItems().clear();
 
 				// Creates a variable for future checking
-				
+
 				while (myRs.next()) {
 
-					
 					data.add(new Flight(myRs.getInt("number"), myRs.getString("airline"), myRs.getString("origin_city"),
-							myRs.getString("destination_city"), myRs.getDate("departure_date"), myRs.getTime("departure_time"),myRs.getDate("arrival_date"),
-							myRs.getTime("arrival_time"),myRs.getInt("seats_available")));
+							myRs.getString("destination_city"), myRs.getDate("departure_date"),
+							myRs.getTime("departure_time"), myRs.getDate("arrival_date"), myRs.getTime("arrival_time"),
+							myRs.getInt("seats_available")));
 					table.setItems(data);
 				}
 				myStat.close();
 				myRs.close();
 				myConn.close();
-				
+
 			} catch (SQLException ex) {
 				System.out.println(ex.getMessage());
 			}
 		});
-
 
 		table.setLayoutY(100);
 		table.setLayoutX(20);
@@ -512,11 +480,9 @@ public void setCountHolder(int countHolder) {
 		return newFlightDep;
 	}
 
-
 	public void setNewFlightDep(Timestamp newFlightDep) {
 		this.newFlightDep = newFlightDep;
 	}
-
 
 	@Override
 	public void handle(ActionEvent arg0) {
@@ -537,31 +503,21 @@ public void setCountHolder(int countHolder) {
 			dbSearch = "origin_city";
 		} else if (choice.equals("Date")) {
 			dbSearch = "departure_date";
-		}
-		 else if (choice.equals("Airline")) {
+		} else if (choice.equals("Airline")) {
 			dbSearch = "airline";
 		}
 		return dbSearch;
 
 	}
-	
+
 	public int conflictCheck(Timestamp d, Timestamp a, Timestamp d1) {
-		
-		if (d1.after(d)&& d1.before(a)) {
+
+		if (d1.after(d) && d1.before(a)) {
 			return 1;
-		}
-		else {
+		} else {
 			return 0;
 		}
-	
+
 	}
-
-
-
-
-	
-
-
-	
 
 }

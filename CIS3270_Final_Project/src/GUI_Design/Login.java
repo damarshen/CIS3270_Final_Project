@@ -14,7 +14,7 @@ import javafx.stage.*;
 public class Login extends Application implements EventHandler<ActionEvent> {
 	private static String user = "";
 	private static String password = "";
-	
+
 	public static String getUser() {
 		return user;
 	}
@@ -62,7 +62,6 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		usernameLabel.setLayoutY(131.0);
 		usernameLabel.setText("Username:");
 		usernameLabel.setFont(new Font(20.0));
-		
 
 		TextField userTxt = new TextField();
 		userTxt.setLayoutX(311.0);
@@ -95,7 +94,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 				// Collects password from the password text field and assigns to a string called
 				// password
-				 setPassword(passwordTxt.getText().trim());
+				setPassword(passwordTxt.getText().trim());
 
 				// SQL query to check if user name and password is in database
 				String sqlUserCheck = "SELECT `username`, `id` FROM `flights`.`users` where username = '" + getUser()
@@ -163,7 +162,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 				// collects user name from the user name text field and assigns to a string
 				// called user
-				setUser(userTxt.getText().trim()) ;
+				setUser(userTxt.getText().trim());
 
 				// Collects password from the password text field and assigns to a string called
 				// password
@@ -220,7 +219,7 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		register.setMnemonicParsing(false);
 		register.setPrefHeight(25.0);
 		register.setPrefWidth(149.0);
-		register.setOnAction(e ->{
+		register.setOnAction(e -> {
 			Register registerPage = new Register();
 			try {
 				registerPage.start(primaryStage);
@@ -265,9 +264,11 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 		anchor.getChildren().addAll(userTxt, passwordTxt, login, register, passwordRecover, usernameLabel, exit,
 				loginLabel, passwordLabel);
-		 BackgroundImage myBI= new BackgroundImage(new Image("file:///C:/Users/ojall/git/CIS3270_Final_Project/CIS3270_Final_Project/src/GUI_Design/commercial-airline-pilot.jpg"),
-		            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-		        anchor.setBackground(new Background(myBI));
+		BackgroundImage myBI = new BackgroundImage(new Image(
+				"file:///C:/Users/ojall/git/CIS3270_Final_Project/CIS3270_Final_Project/src/GUI_Design/commercial-airline-pilot.jpg"),
+				BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+				BackgroundSize.DEFAULT);
+		anchor.setBackground(new Background(myBI));
 		scene = new Scene(anchor, 550, 350);
 		;
 		primaryStage.setScene(scene);
@@ -275,7 +276,6 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 		primaryStage.centerOnScreen();
 	}
 
-	
 	@Override
 	public void handle(ActionEvent event) {
 		// TODO Auto-generated method stub
