@@ -6,6 +6,7 @@ import javafx.event.*;
 import javafx.geometry.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
@@ -264,13 +265,17 @@ public class Login extends Application implements EventHandler<ActionEvent> {
 
 		anchor.getChildren().addAll(userTxt, passwordTxt, login, register, passwordRecover, usernameLabel, exit,
 				loginLabel, passwordLabel);
-		scene = new Scene(anchor, 600, 400);
-
+		 BackgroundImage myBI= new BackgroundImage(new Image("file:///C:/Users/ojall/git/CIS3270_Final_Project/CIS3270_Final_Project/src/GUI_Design/commercial-airline-pilot.jpg"),
+		            BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+		        anchor.setBackground(new Background(myBI));
+		scene = new Scene(anchor, 550, 350);
+		;
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		primaryStage.centerOnScreen();
 	}
 
+	
 	@Override
 	public void handle(ActionEvent event) {
 		// TODO Auto-generated method stub
